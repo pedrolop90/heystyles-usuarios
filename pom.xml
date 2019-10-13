@@ -5,12 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.heystyles</groupId>
-    <artifactId>heystyles-usuarios</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>usuarios</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
     <modules>
         <module>heystyles-usuarios-api</module>
+        <module>heystyles-usuarios-core</module>
     </modules>
-    <packaging>pom</packaging>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -27,6 +29,25 @@
         <log4j.version>1.2.17</log4j.version>
         <jaxb.version>2.2.11</jaxb.version>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>myMavenRepoRead</id>
+            <url>https://mymavenrepo.com/repo/vL2qngT4IShkADSo7PrO/</url>
+        </repository>
+    </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>myMavenRepoWrite</id>
+            <url>https://mymavenrepo.com/repo/vL2qngT4IShkADSo7PrO/</url>
+        </repository>
+
+        <snapshotRepository>
+            <id>myMavenRepoWrite</id>
+            <url>https://mymavenrepo.com/repo/RXOiiSWEnvQ3QDj8CHGU/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <build>
         <plugins>

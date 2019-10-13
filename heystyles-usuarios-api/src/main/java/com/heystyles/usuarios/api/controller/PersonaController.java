@@ -1,0 +1,98 @@
+package com.heystyles.usuarios.api.controller;
+
+import com.heystyles.common.response.Responses;
+import com.heystyles.common.types.BaseResponse;
+import com.heystyles.common.types.IdResponse;
+import com.heystyles.usuarios.api.service.PersonaService;
+import com.heystyles.usuarios.core.domain.Persona;
+import com.heystyles.usuarios.core.dto.PersonaListResponse;
+import com.heystyles.usuarios.core.dto.PersonaResponse;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.util.List;
+
+@RequestMapping(value = "/personas")
+@RestController
+@Api(value = "Persona Controller",
+        description = "Controller para el manejo de las personas")
+public class PersonaController {
+
+    @Autowired
+    private PersonaService personaService;
+
+    @PostMapping
+    @ApiOperation(value = "Permite Crear una Persona en la base de datos.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Persona Creada")
+    })
+    public ResponseEntity<IdResponse> insert(
+            @NotNull @Valid @RequestBody Persona persona) {
+        Long idPersona = personaService.insert(persona);
+        return Responses.responseEntity(new IdResponse(idPersona));
+    }
+
+    @ApiOperation(value = "Permite actualizar una Persona en la base de datos")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Persona Actualizada"),
+            @ApiResponse(code = 404, message = "Persona no encontrada.")
+    })
+    @PutMapping(value = "/{personaId}",
+            consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BaseResponse> update(
+            @NotNull @PathVariable(name = "personaId") Long personaId,
+            @NotNull @Valid @RequestBody Persona persona) {
+        personaService.update(personaId, persona);
+        return Responses.successEntity("Actualizacion correcta");
+    }
+
+    @ApiOperation(value = "Permite Eliminar una Persona de la base de datos")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Persona Eliminada."),
+            @ApiResponse(code = 404, message = "Persona no encontrada.")
+    })
+    @PutMapping(value = "/{personaId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BaseResponse> delete(
+            @NotNull @PathVariable(name = "personaId") Long personaId) {
+        personaService.delete(personaId);
+        return Responses.successEntity("Eliminado correcto");
+    }
+
+    @ApiOperation(value = "Permite Buscar una Persona en la base de datos")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Persona Encontrada."),
+            @ApiResponse(code = 404, message = "Persona no encontrada.")
+    })
+    @PutMapping(value = "/{personaId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PersonaResponse> getPersona(
+            @NotNull @PathVariable(name = "personaId") Long personaId) {
+        Persona persona = personaService.getPersona(personaId);
+        return Responses.responseEntity(new PersonaResponse(persona));
+    }
+
+    @ApiOperation(value = "Permite Listar todas las Persona de la base de datos")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Persoans Encontradas."),
+            @ApiResponse(code = 404, message = "Personas no encontradas.")
+    })
+    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PersonaListResponse> getPersonas() {
+        List<Persona> personas = personaService.findAll();
+        return Responses.responseEntity(new PersonaListResponse(personas));
+    }
+
+
+}

@@ -3,13 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>usuarios</artifactId>
+    <artifactId>usuarios-api</artifactId>
     <packaging>jar</packaging>
 
     <parent>
-        <artifactId>heystyles-usuarios</artifactId>
         <groupId>com.heystyles</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <artifactId>usuarios</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <properties>
@@ -17,6 +17,27 @@
     </properties>
 
     <dependencies>
+        <!-- HeyStyles -->
+        <dependency>
+            <groupId>com.heystyles</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.heystyles</groupId>
+            <artifactId>usuarios-core</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.heystyles</groupId>
+            <artifactId>seguridad-core</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.heystyles</groupId>
+            <artifactId>seguridad-cliente</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
         <!-- Spring WEB -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
