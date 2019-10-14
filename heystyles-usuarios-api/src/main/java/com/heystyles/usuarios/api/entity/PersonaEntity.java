@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "PERSONA")
-public class PersonaEntity extends AuditableEntity<Long> {
+public class PersonaEntity extends AuditableEntity<Long> implements PersonableCommon {
 
     public interface Attributes extends AuditableEntity.Attributes {
     }
@@ -98,14 +98,6 @@ public class PersonaEntity extends AuditableEntity<Long> {
         this.updatedDate = updatedDate;
     }
 
-    public String getNombreCompleto() {
-        return nombreCompleto;
-    }
-
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
-    }
-
     public String getNombres() {
         return nombres;
     }
@@ -120,6 +112,14 @@ public class PersonaEntity extends AuditableEntity<Long> {
 
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
+    }
+
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
     }
 
     public String getNumeroDocumento() {

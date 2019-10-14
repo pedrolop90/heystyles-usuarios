@@ -36,7 +36,6 @@ public class CargoController {
     @Autowired
     private CargoService cargoService;
 
-
     @ApiOperation(value = "Permite Crear un Cargo en la base de datos.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Cargo Creado.")
@@ -87,7 +86,7 @@ public class CargoController {
         return Responses.responseEntity(new CargoResponse(cargo));
     }
 
-    @ApiOperation(value = "Permite Listar todas los Cargos de la base de datos")
+    @ApiOperation(value = "Permite Listar todos los Cargos de la base de datos")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Cargos Encontrados."),
             @ApiResponse(code = 404, message = "Cargos no encontrados.")
@@ -97,6 +96,5 @@ public class CargoController {
         List<Cargo> cargos = cargoService.findAll();
         return Responses.responseEntity(new CargoListResponse(cargos));
     }
-
 
 }

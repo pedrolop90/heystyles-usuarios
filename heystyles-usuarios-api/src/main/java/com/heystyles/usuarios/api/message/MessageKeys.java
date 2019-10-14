@@ -7,4 +7,6 @@ public interface MessageKeys extends com.heystyles.common.util.MessageKeys {
     String PROVEEDOR_NOT_FOUND = "heystyles.usuarios.proveedor.not-found";
 
     String CARGO_NOT_FOUND = "heystyles.usuarios.cargo.not-found";
+
+    String USUARIO_NOT_FOUND = "heystyles.usuarios.usuario.not-found";
 }

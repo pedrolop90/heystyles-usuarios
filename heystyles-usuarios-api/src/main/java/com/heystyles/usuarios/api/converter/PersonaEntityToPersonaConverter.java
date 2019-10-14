@@ -6,17 +6,13 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PersonaEntityToPersonaConverter implements Converter<PersonaEntity, Persona> {
+public class PersonaEntityToPersonaConverter extends PersonableEntityToPersona<PersonaEntity, Persona>
+        implements Converter<PersonaEntity, Persona> {
     @Override
     public Persona convert(PersonaEntity entity) {
         Persona bean = new Persona();
         bean.setId(entity.getId());
-        bean.setNombres(entity.getNombres());
-        bean.setApellidos(entity.getApellidos());
-        bean.setNumeroDocumento(entity.getNumeroDocumento());
-        bean.setEmail(entity.getEmail());
-        bean.setFechaNacimiento(entity.getFechaNacimiento());
-        bean.setTipoDocumento(entity.getTipoDocumento());
+        convertPersona(entity, bean);
         return bean;
     }
 }
