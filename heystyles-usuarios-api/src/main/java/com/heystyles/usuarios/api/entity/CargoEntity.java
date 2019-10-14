@@ -18,32 +18,26 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "PROVEEDOR")
+@Table(name = "CARGO")
 @Where(clause = "S_DELETE = 0")
-public class ProveedorEntity extends AuditableEntity<Long> implements SoftDeletable {
+public class CargoEntity extends AuditableEntity<Long> implements SoftDeletable {
 
     public interface Attributes extends AuditableEntity.Attributes {
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
+    @Column(name = "ID")
     private Long id;
 
     @Column(name = "NOMBRE", nullable = false)
     private String nombre;
 
-    @Column(name = "DESCRIPCION", nullable = false)
-    private String descripcion;
+    @Column(name = "NIVEL", nullable = false)
+    private Long nivel;
 
-    @Column(name = "TELEFONO", nullable = false)
-    private String telefono;
-
-    @Column(name = "DIRECCION")
-    private String direccion;
-
-    @Column(name = "EMAIL", nullable = false)
-    private String email;
+    @Column(name = "ID_SECURITY", nullable = false)
+    private String idSecurity;
 
     @Column(name = "S_DELETE", nullable = false)
     private boolean delete;
@@ -80,36 +74,20 @@ public class ProveedorEntity extends AuditableEntity<Long> implements SoftDeleta
         this.nombre = nombre;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public Long getNivel() {
+        return nivel;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setNivel(Long nivel) {
+        this.nivel = nivel;
     }
 
-    public String getTelefono() {
-        return telefono;
+    public String getIdSecurity() {
+        return idSecurity;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setIdSecurity(String idSecurity) {
+        this.idSecurity = idSecurity;
     }
 
     public boolean isDelete() {

@@ -14,6 +14,8 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -34,11 +36,12 @@ public class PersonaController {
     @Autowired
     private PersonaService personaService;
 
-    @PostMapping
     @ApiOperation(value = "Permite Crear una Persona en la base de datos.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Persona Creada")
     })
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<IdResponse> insert(
             @NotNull @Valid @RequestBody Persona persona) {
         Long idPersona = personaService.insert(persona);
@@ -64,7 +67,7 @@ public class PersonaController {
             @ApiResponse(code = 200, message = "Persona Eliminada."),
             @ApiResponse(code = 404, message = "Persona no encontrada.")
     })
-    @PutMapping(value = "/{personaId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/{personaId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> delete(
             @NotNull @PathVariable(name = "personaId") Long personaId) {
         personaService.delete(personaId);
@@ -76,7 +79,7 @@ public class PersonaController {
             @ApiResponse(code = 200, message = "Persona Encontrada."),
             @ApiResponse(code = 404, message = "Persona no encontrada.")
     })
-    @PutMapping(value = "/{personaId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{personaId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PersonaResponse> getPersona(
             @NotNull @PathVariable(name = "personaId") Long personaId) {
         Persona persona = personaService.getPersona(personaId);
@@ -88,7 +91,7 @@ public class PersonaController {
             @ApiResponse(code = 200, message = "Persoans Encontradas."),
             @ApiResponse(code = 404, message = "Personas no encontradas.")
     })
-    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PersonaListResponse> getPersonas() {
         List<Persona> personas = personaService.findAll();
         return Responses.responseEntity(new PersonaListResponse(personas));

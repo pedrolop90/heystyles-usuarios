@@ -22,7 +22,7 @@ public class SwaggerConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.jamestown.academico.api.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.heystyles.usuarios.api.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .globalOperationParameters(operationParameters());

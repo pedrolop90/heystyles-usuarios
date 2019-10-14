@@ -1,5 +1,8 @@
 package com.heystyles.usuarios.api.config;
 
+import com.heystyles.common.response.ClientResponseErrorHandler;
+import com.heystyles.seguridad.cliente.UserCliente;
+import com.heystyles.seguridad.cliente.impl.UserClienteImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +20,13 @@ public class ClientConfig {
         return restTemplateBuilder
                 .setConnectTimeout(clientProperties.getConnectionTimeout())
                 .setReadTimeout(clientProperties.getReadTimeout())
-                //.errorHandler(new ClientResponseErrorHandler())
+                .errorHandler(new ClientResponseErrorHandler())
                 .build();
     }
+
+    @Bean
+    public UserCliente userCliente(RestTemplate restTemplate) {
+        return new UserClienteImpl(clientProperties.getSeguridadUrlBase(), restTemplate);
+    }
+
 }

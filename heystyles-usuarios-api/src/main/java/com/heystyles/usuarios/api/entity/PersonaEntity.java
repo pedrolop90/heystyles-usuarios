@@ -3,6 +3,7 @@ package com.heystyles.usuarios.api.entity;
 import com.heystyles.common.persistence.LocalDateTimeAttributeConverter;
 import com.heystyles.common.types.AuditableEntity;
 import com.heystyles.usuarios.core.domain.TipoDocumento;
+import org.hibernate.annotations.Formula;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -36,6 +37,9 @@ public class PersonaEntity extends AuditableEntity<Long> {
     @Column(name = "APELLIDOS", nullable = false)
     private String apellidos;
 
+    @Formula(value = "CONCAT(NOMBRES, ' ', APELLIDOS)")
+    private String nombreCompleto;
+
     @Column(name = "NUMERODOCUMENTO", nullable = false)
     private String numeroDocumento;
 
@@ -56,12 +60,12 @@ public class PersonaEntity extends AuditableEntity<Long> {
     @CreatedDate
     @NotNull
     @Column(name = "CREATED_DATE")
-    @Convert(converter = com.jamestown.commons.persistence.LocalDateTimeAttributeConverter.class)
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime createdDate;
 
     @LastModifiedDate
     @Column(name = "UPDATED_DATE")
-    @Convert(converter = com.jamestown.commons.persistence.LocalDateTimeAttributeConverter.class)
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime updatedDate;
 
     @Override
@@ -92,6 +96,14 @@ public class PersonaEntity extends AuditableEntity<Long> {
     @Override
     public void setUpdatedDate(LocalDateTime localDateTime) {
         this.updatedDate = updatedDate;
+    }
+
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
     }
 
     public String getNombres() {
