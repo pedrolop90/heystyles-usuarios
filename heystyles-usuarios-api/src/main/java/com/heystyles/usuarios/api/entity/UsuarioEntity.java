@@ -18,14 +18,12 @@ public class UsuarioEntity extends PersonableEntity implements SoftDeletable {
     public interface Attributes extends PersonableEntity.Attributes {
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "ID_CARGO", nullable = false)
     private CargoEntity cargoEntity;
 
-
     @Column(name = "S_DELETE", nullable = false)
     private boolean delete;
-
 
     public CargoEntity getCargoEntity() {
         return cargoEntity;

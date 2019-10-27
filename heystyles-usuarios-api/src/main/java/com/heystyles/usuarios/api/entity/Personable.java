@@ -2,9 +2,9 @@ package com.heystyles.usuarios.api.entity;
 
 import com.heystyles.usuarios.core.domain.TipoDocumento;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
-public interface PersonableCommon {
+public interface Personable {
 
     String getNombres();
 
@@ -30,12 +30,15 @@ public interface PersonableCommon {
 
     void setIdSecurity(String idSecurity);
 
-    LocalDateTime getFechaNacimiento();
+    LocalDate getFechaNacimiento();
 
-    void setFechaNacimiento(LocalDateTime fechaNacimiento);
+    void setFechaNacimiento(LocalDate fechaNacimiento);
 
     TipoDocumento getTipoDocumento();
 
     void setTipoDocumento(TipoDocumento tipoDocumento);
 
+    String getTelefono();
+
+    void setTelefono(String telefono);
 }

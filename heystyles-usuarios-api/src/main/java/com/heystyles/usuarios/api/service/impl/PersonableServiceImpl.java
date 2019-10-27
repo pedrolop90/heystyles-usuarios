@@ -24,7 +24,7 @@ public abstract class PersonableServiceImpl<D extends DomainBean<ID>, T extends 
 
     @Override
     public void registerUser(String numeroDocumento, String rolId) {
-        PersonaEntity personaEntity = personaDao.findByNumeroDocumento(rolId);
+        PersonaEntity personaEntity = personaDao.findByNumeroDocumento(numeroDocumento);
 
         if (personaEntity.getIdSecurity() == null) {
             String password = UUID.randomUUID().toString().substring(0, 8);

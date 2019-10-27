@@ -6,7 +6,8 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PersonaEntityToPersonaConverter extends PersonableEntityToPersona<PersonaEntity, Persona>
+public class PersonaEntityToPersonaConverter
+        extends PersonableEntityToPersona<PersonaEntity, Persona>
         implements Converter<PersonaEntity, Persona> {
     @Override
     public Persona convert(PersonaEntity entity) {

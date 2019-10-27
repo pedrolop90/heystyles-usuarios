@@ -1,9 +1,9 @@
 package com.heystyles.usuarios.api.converter;
 
-import com.heystyles.usuarios.api.entity.PersonableCommon;
+import com.heystyles.usuarios.api.entity.Personable;
 import com.heystyles.usuarios.core.domain.Persona;
 
-public class PersonableEntityToPersona<T extends PersonableCommon, D extends Persona> {
+public class PersonableEntityToPersona<T extends Personable, D extends Persona> {
 
     public void convertPersona(T entity, D bean) {
         bean.setNombres(entity.getNombres());
@@ -12,6 +12,7 @@ public class PersonableEntityToPersona<T extends PersonableCommon, D extends Per
         bean.setFechaNacimiento(entity.getFechaNacimiento());
         bean.setEmail(entity.getEmail());
         bean.setTipoDocumento(entity.getTipoDocumento());
+        bean.setTelefono(entity.getTelefono());
     }
 
 }

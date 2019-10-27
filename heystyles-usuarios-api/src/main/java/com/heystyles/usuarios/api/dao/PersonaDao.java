@@ -9,4 +9,6 @@ public interface PersonaDao extends JpaRepository<PersonaEntity, Long> {
 
     PersonaEntity findByNumeroDocumento(String numeroDocumento);
 
+    PersonaEntity findByEmail(String email);
+
 }

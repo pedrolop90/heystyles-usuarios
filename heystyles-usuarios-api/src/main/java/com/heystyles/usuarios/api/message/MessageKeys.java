@@ -9,4 +9,10 @@ public interface MessageKeys extends com.heystyles.common.util.MessageKeys {
     String CARGO_NOT_FOUND = "heystyles.usuarios.cargo.not-found";
 
     String USUARIO_NOT_FOUND = "heystyles.usuarios.usuario.not-found";
+
+    String PERSONA_NUMERO_DOCUMENTO_DUPLICATED = "heystyles.persona.numero-documento.duplicated";
+
+    String PERSONA_EMAIL_DUPLICATED = "heystyles.persona.email.duplicated";
+
+    String CARGO_NOMBRE_DUPLICATED = "heystyles.cargo.nombre.duplicated";
 }

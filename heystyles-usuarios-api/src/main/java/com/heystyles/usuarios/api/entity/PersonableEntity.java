@@ -3,6 +3,7 @@ package com.heystyles.usuarios.api.entity;
 import com.heystyles.common.persistence.LocalDateTimeAttributeConverter;
 import com.heystyles.common.types.AuditableEntity;
 import com.heystyles.usuarios.core.domain.TipoDocumento;
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -14,10 +15,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class PersonableEntity extends AuditableEntity<Long> implements PersonableCommon {
+@MappedSuperclass
+@Where(clause = "S_DELETE = 0")
+public abstract class PersonableEntity extends AuditableEntity<Long> implements Personable {
 
     public interface Attributes extends AuditableEntity.Attributes {
     }
@@ -27,7 +32,7 @@ public class PersonableEntity extends AuditableEntity<Long> implements Personabl
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_PERSONA", nullable = false)
     private PersonaEntity personaEntity = new PersonaEntity();
 
@@ -121,12 +126,12 @@ public class PersonableEntity extends AuditableEntity<Long> implements Personabl
     }
 
     @Override
-    public LocalDateTime getFechaNacimiento() {
+    public LocalDate getFechaNacimiento() {
         return personaEntity.getFechaNacimiento();
     }
 
     @Override
-    public void setFechaNacimiento(LocalDateTime fechaNacimiento) {
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
         personaEntity.setFechaNacimiento(fechaNacimiento);
     }
 
@@ -158,5 +163,15 @@ public class PersonableEntity extends AuditableEntity<Long> implements Personabl
     @Override
     public void setUpdatedDate(LocalDateTime updatedDate) {
         this.updatedDate = updatedDate;
+    }
+
+    @Override
+    public String getTelefono() {
+        return personaEntity.getTelefono();
+    }
+
+    @Override
+    public void setTelefono(String telefono) {
+        personaEntity.setTelefono(telefono);
     }
 }

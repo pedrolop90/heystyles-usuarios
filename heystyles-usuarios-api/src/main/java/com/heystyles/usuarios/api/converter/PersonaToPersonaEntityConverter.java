@@ -40,6 +40,7 @@ public class PersonaToPersonaEntityConverter implements Converter<Persona, Perso
         entity.setEmail(bean.getEmail());
         entity.setFechaNacimiento(bean.getFechaNacimiento());
         entity.setTipoDocumento(bean.getTipoDocumento());
+        entity.setTelefono(bean.getTelefono());
 
         return entity;
     }
