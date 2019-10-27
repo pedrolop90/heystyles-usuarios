@@ -34,7 +34,7 @@ public abstract class PersonableEntity extends AuditableEntity<Long> implements 
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_PERSONA", nullable = false)
-    private PersonaEntity personaEntity = new PersonaEntity();
+    private PersonaEntity persona = new PersonaEntity();
 
     @CreatedDate
     @NotNull
@@ -57,92 +57,92 @@ public abstract class PersonableEntity extends AuditableEntity<Long> implements 
         this.id = id;
     }
 
-    public PersonaEntity getPersonaEntity() {
-        return personaEntity;
+    public PersonaEntity getPersona() {
+        return persona;
     }
 
-    public void setPersonaEntity(PersonaEntity personaEntity) {
-        this.personaEntity = personaEntity;
+    public void setPersona(PersonaEntity persona) {
+        this.persona = persona;
     }
 
     @Override
     public String getNombres() {
-        return personaEntity.getNombres();
+        return persona.getNombres();
     }
 
     @Override
     public void setNombres(String nombres) {
-        personaEntity.setNombres(nombres);
+        persona.setNombres(nombres);
     }
 
     @Override
     public String getApellidos() {
-        return personaEntity.getApellidos();
+        return persona.getApellidos();
     }
 
     @Override
     public void setApellidos(String apellidos) {
-        personaEntity.setApellidos(apellidos);
+        persona.setApellidos(apellidos);
     }
 
     @Override
     public String getNombreCompleto() {
-        return personaEntity.getNombreCompleto();
+        return persona.getNombreCompleto();
     }
 
     @Override
     public void setNombreCompleto(String nombreCompleto) {
-        personaEntity.setNombreCompleto(nombreCompleto);
+        persona.setNombreCompleto(nombreCompleto);
     }
 
     @Override
     public String getNumeroDocumento() {
-        return personaEntity.getNumeroDocumento();
+        return persona.getNumeroDocumento();
     }
 
     @Override
     public void setNumeroDocumento(String numeroDocumento) {
-        personaEntity.setNumeroDocumento(numeroDocumento);
+        persona.setNumeroDocumento(numeroDocumento);
     }
 
     @Override
     public String getEmail() {
-        return personaEntity.getEmail();
+        return persona.getEmail();
     }
 
     @Override
     public void setEmail(String email) {
-        personaEntity.setEmail(email);
+        persona.setEmail(email);
     }
 
     @Override
     public String getIdSecurity() {
-        return personaEntity.getIdSecurity();
+        return persona.getIdSecurity();
     }
 
     @Override
     public void setIdSecurity(String idSecurity) {
-        personaEntity.setIdSecurity(idSecurity);
+        persona.setIdSecurity(idSecurity);
     }
 
     @Override
     public LocalDate getFechaNacimiento() {
-        return personaEntity.getFechaNacimiento();
+        return persona.getFechaNacimiento();
     }
 
     @Override
     public void setFechaNacimiento(LocalDate fechaNacimiento) {
-        personaEntity.setFechaNacimiento(fechaNacimiento);
+        persona.setFechaNacimiento(fechaNacimiento);
     }
 
     @Override
     public TipoDocumento getTipoDocumento() {
-        return personaEntity.getTipoDocumento();
+        return persona.getTipoDocumento();
     }
 
     @Override
     public void setTipoDocumento(TipoDocumento tipoDocumento) {
-        personaEntity.setTipoDocumento(tipoDocumento);
+        persona.setTipoDocumento(tipoDocumento);
     }
 
     @Override
@@ -167,11 +167,11 @@ public abstract class PersonableEntity extends AuditableEntity<Long> implements 
 
     @Override
     public String getTelefono() {
-        return personaEntity.getTelefono();
+        return persona.getTelefono();
     }
 
     @Override
     public void setTelefono(String telefono) {
-        personaEntity.setTelefono(telefono);
+        persona.setTelefono(telefono);
     }
 }

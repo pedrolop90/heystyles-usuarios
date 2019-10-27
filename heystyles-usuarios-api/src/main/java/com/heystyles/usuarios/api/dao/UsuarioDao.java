@@ -10,4 +10,6 @@ public interface UsuarioDao extends JpaRepository<UsuarioEntity, Long> {
     UsuarioEntity findByPersonaNumeroDocumento(String numeroDocumento);
 
     UsuarioEntity findByPersonaEmail(String email);
+
+    Long countByCargoId(Long cargoId);
 }

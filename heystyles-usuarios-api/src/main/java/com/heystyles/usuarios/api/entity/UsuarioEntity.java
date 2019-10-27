@@ -20,17 +20,17 @@ public class UsuarioEntity extends PersonableEntity implements SoftDeletable {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "ID_CARGO", nullable = false)
-    private CargoEntity cargoEntity;
+    private CargoEntity cargo;
 
     @Column(name = "S_DELETE", nullable = false)
     private boolean delete;
 
-    public CargoEntity getCargoEntity() {
-        return cargoEntity;
+    public CargoEntity getCargo() {
+        return cargo;
     }
 
-    public void setCargoEntity(CargoEntity cargoEntity) {
-        this.cargoEntity = cargoEntity;
+    public void setCargo(CargoEntity cargo) {
+        this.cargo = cargo;
     }
 
     @Override

@@ -33,13 +33,15 @@ public class PersonaUniqueValidator implements Validator<Persona> {
         List<ValidationError> errors = new ArrayList<>();
         PersonaEntity personaNumeroDocumento = personaDao.findByNumeroDocumento(persona.getNumeroDocumento());
         if (personaNumeroDocumento != null && !Objects.equals(persona.getId(), personaNumeroDocumento.getId())) {
-            errors.add(new ValidationError("NumeroDocumento", messageSource.getMessage(MessageKeys.PERSONA_NUMERO_DOCUMENTO_DUPLICATED,
-                                                                                       new String[]{String.valueOf(persona.getNumeroDocumento())}, getLocale())));
+            errors.add(new ValidationError("NumeroDocumento", messageSource.getMessage(
+                    MessageKeys.PERSONA_NUMERO_DOCUMENTO_DUPLICATED,
+                    new String[]{String.valueOf(persona.getNumeroDocumento())}, getLocale())));
         }
         PersonaEntity personaEmail = personaDao.findByEmail(persona.getEmail());
         if (personaEmail != null && !Objects.equals(persona.getId(), personaEmail.getId())) {
-            errors.add(new ValidationError("Email", messageSource.getMessage(MessageKeys.PERSONA_EMAIL_DUPLICATED,
-                                                                                       new String[]{String.valueOf(persona.getEmail())}, getLocale())));
+            errors.add(new ValidationError("Email", messageSource.getMessage(
+                    MessageKeys.PERSONA_EMAIL_DUPLICATED,
+                    new String[]{String.valueOf(persona.getEmail())}, getLocale())));
         }
         return errors;
     }

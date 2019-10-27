@@ -2,10 +2,8 @@ package com.heystyles.usuarios.api.validator;
 
 import com.heystyles.common.validation.ValidationError;
 import com.heystyles.common.validation.Validator;
-import com.heystyles.common.validation.groups.Insert;
-import com.heystyles.common.validation.groups.Update;
-import com.heystyles.usuarios.api.dao.CargoDao;
-import com.heystyles.usuarios.api.entity.CargoEntity;
+import com.heystyles.common.validation.groups.Delete;
+import com.heystyles.usuarios.api.dao.UsuarioDao;
 import com.heystyles.usuarios.api.message.MessageKeys;
 import com.heystyles.usuarios.core.domain.Cargo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +13,14 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 import static org.springframework.context.i18n.LocaleContextHolder.getLocale;
 
 @Component
-public class CargoUniqueValidator implements Validator<Cargo> {
+public class CargoDelteValidator implements Validator<Cargo> {
 
     @Autowired
-    private CargoDao cargoDao;
+    private UsuarioDao usuarioDao;
 
     @Autowired
     private MessageSource messageSource;
@@ -31,18 +28,17 @@ public class CargoUniqueValidator implements Validator<Cargo> {
     @Override
     public List<ValidationError> validate(Cargo cargo) {
         List<ValidationError> errors = new ArrayList<>();
-        CargoEntity cargoNombre = cargoDao.findByNombre(cargo.getNombre());
-        if (cargoNombre != null && !Objects.equals(cargoNombre.getNombre(), cargo.getNombre())) {
-            errors.add(new ValidationError("Nombre", messageSource.getMessage(
-                    MessageKeys.CARGO_NOMBRE_DUPLICATED,
-                    new String[]{String.valueOf(cargo.getNombre())}, getLocale())));
-
+        Long cantidadUsuarios = usuarioDao.countByCargoId(cargo.getId());
+        if (cantidadUsuarios > 0) {
+            errors.add(new ValidationError("Cargo", messageSource.getMessage(
+                    MessageKeys.CARGO_USUARIO_REFERENCIADOS_NOT_DELETE,
+                    new String[]{String.valueOf(cantidadUsuarios), String.valueOf(cargo.getId())}, getLocale())));
         }
         return errors;
     }
 
     @Override
     public List<Class<?>> getScopes() {
-        return Arrays.asList(Insert.class, Update.class);
+        return Arrays.asList(Delete.class);
     }
 }

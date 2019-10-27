@@ -10,6 +10,7 @@ public class CargoEntityToCargoConverter implements Converter<CargoEntity, Cargo
     @Override
     public Cargo convert(CargoEntity entity) {
         Cargo cargo = new Cargo();
+        cargo.setId(entity.getId());
         cargo.setNombre(entity.getNombre());
         cargo.setNivel(entity.getNivel());
         cargo.setIdSecurity(entity.getIdSecurity());

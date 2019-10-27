@@ -6,11 +6,9 @@ import com.heystyles.common.types.DomainBean;
 import com.heystyles.common.util.Constants;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Persona extends DomainBean<Long> {

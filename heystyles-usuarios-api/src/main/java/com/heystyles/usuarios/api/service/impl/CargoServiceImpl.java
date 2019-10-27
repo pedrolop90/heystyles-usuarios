@@ -2,15 +2,19 @@ package com.heystyles.usuarios.api.service.impl;
 
 import com.heystyles.common.exception.APIExceptions;
 import com.heystyles.common.service.impl.ServiceImpl;
+import com.heystyles.seguridad.cliente.RolClient;
 import com.heystyles.usuarios.api.dao.CargoDao;
 import com.heystyles.usuarios.api.entity.CargoEntity;
 import com.heystyles.usuarios.api.message.MessageKeys;
 import com.heystyles.usuarios.api.service.CargoService;
 import com.heystyles.usuarios.core.domain.Cargo;
+import dto.RequestRolAuth0;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -24,11 +28,34 @@ public class CargoServiceImpl
     private CargoDao cargoDao;
 
     @Autowired
+    private RolClient rolClient;
+
+    @Autowired
     private MessageSource messageSource;
 
     @Override
     protected CrudRepository<CargoEntity, Long> getDao() {
         return cargoDao;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public Long insert(Cargo bean) {
+        Long id = super.insert(bean);
+        Optional.ofNullable(createRol(bean.getNombre()))
+                .ifPresent(s -> {
+                    bean.setId(id);
+                    bean.setIdSecurity(s);
+                    update(bean);
+                });
+        return id;
+    }
+
+    private String createRol(String nombre) {
+        RequestRolAuth0 requestRolAuth0 = new RequestRolAuth0();
+        requestRolAuth0.setName(nombre);
+        requestRolAuth0.setDescription(nombre);
+        return rolClient.create(requestRolAuth0);
     }
 
     @Override

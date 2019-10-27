@@ -33,13 +33,15 @@ public class UsuarioUniqueValidator implements Validator<Usuario> {
         List<ValidationError> errors = new ArrayList<>();
         UsuarioEntity usuarioNumeroDocumento = usuarioDao.findByPersonaNumeroDocumento(usuario.getNumeroDocumento());
         if (usuarioNumeroDocumento != null && !Objects.equals(usuarioNumeroDocumento.getId(), usuario.getId())) {
-            errors.add(new ValidationError("NumeroDocumento", messageSource.getMessage(MessageKeys.PERSONA_NUMERO_DOCUMENTO_DUPLICATED,
-                                                                                       new String[]{String.valueOf(usuario.getNumeroDocumento())}, getLocale())));
+            errors.add(new ValidationError("NumeroDocumento", messageSource.getMessage(
+                    MessageKeys.PERSONA_NUMERO_DOCUMENTO_DUPLICATED,
+                    new String[]{String.valueOf(usuario.getNumeroDocumento())}, getLocale())));
         }
         UsuarioEntity usuarioEmail = usuarioDao.findByPersonaEmail(usuario.getEmail());
         if (usuarioEmail != null && !Objects.equals(usuarioEmail.getId(), usuario.getId())) {
-            errors.add(new ValidationError("Email", messageSource.getMessage(MessageKeys.PERSONA_EMAIL_DUPLICATED,
-                                                                             new String[]{String.valueOf(usuario.getEmail())}, getLocale())));
+            errors.add(new ValidationError("Email", messageSource.getMessage(
+                    MessageKeys.PERSONA_EMAIL_DUPLICATED,
+                    new String[]{String.valueOf(usuario.getEmail())}, getLocale())));
         }
         return errors;
     }

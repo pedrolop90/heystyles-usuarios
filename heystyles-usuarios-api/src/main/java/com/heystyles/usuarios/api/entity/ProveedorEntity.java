@@ -14,7 +14,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
@@ -52,7 +51,6 @@ public class ProveedorEntity extends AuditableEntity<Long> implements SoftDeleta
     private Long fechaLimitePago;
 
     @CreatedDate
-    @NotNull
     @Column(name = "CREATED_DATE")
     @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime createdDate;

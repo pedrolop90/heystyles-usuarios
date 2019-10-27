@@ -44,7 +44,7 @@ public class UsuarioToUsuarioEntityConverter implements Converter<Usuario, Usuar
             entity = new UsuarioEntity();
             PersonaEntity personaEntity = Optional.ofNullable(
                     personaDao.findByNumeroDocumento(bean.getNumeroDocumento())).orElse(new PersonaEntity());
-            entity.setPersonaEntity(personaEntity);
+            entity.setPersona(personaEntity);
         }
         else {
             entity = Optional.ofNullable(usuarioDao.findOne(bean.getId())).orElseThrow(() ->
@@ -54,8 +54,8 @@ public class UsuarioToUsuarioEntityConverter implements Converter<Usuario, Usuar
         CargoEntity cargoEntity = Optional.ofNullable(cargoDao.findOne(bean.getCargoId()))
                 .orElseThrow(() -> APIExceptions.objetoNoEncontrado(messageSource.getMessage(
                         MessageKeys.CARGO_NOT_FOUND, new String[]{String.valueOf(bean.getCargoId())}, getLocale())));
-        entity.setCargoEntity(cargoEntity);
-        entity.setPersonaEntity(converterService.convertTo(bean, PersonaEntity.class));
+        entity.setCargo(cargoEntity);
+        entity.setPersona(converterService.convertTo(bean, PersonaEntity.class));
         return entity;
     }
 }
