@@ -71,6 +71,13 @@ public class PersonaEntity extends AuditableEntity<Long> implements Personable {
     @Column(name = "TELEFONO")
     private String telefono;
 
+    public PersonaEntity() {
+    }
+
+    public PersonaEntity(Long id) {
+        setId(id);
+    }
+
     @Override
     public Long getId() {
         return this.id;

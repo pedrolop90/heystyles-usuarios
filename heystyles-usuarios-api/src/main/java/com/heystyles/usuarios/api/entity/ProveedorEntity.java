@@ -10,11 +10,14 @@ import org.springframework.data.annotation.LastModifiedDate;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "PROVEEDOR")
@@ -59,6 +62,12 @@ public class ProveedorEntity extends AuditableEntity<Long> implements SoftDeleta
     @Column(name = "UPDATED_DATE")
     @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime updatedDate;
+
+    @OneToMany(mappedBy = "proveedor", fetch = FetchType.LAZY)
+    private List<ProveedorPersonaEntity> contactos;
+
+    @OneToMany(mappedBy = "proveedor", fetch = FetchType.LAZY)
+    private List<CuentaBancoEntity> cuentasBanco;
 
     @Override
     public Long getId() {
@@ -149,5 +158,21 @@ public class ProveedorEntity extends AuditableEntity<Long> implements SoftDeleta
     @Override
     public void markAsDeleted() {
         delete = true;
+    }
+
+    public List<ProveedorPersonaEntity> getContactos() {
+        return contactos;
+    }
+
+    public void setContactos(List<ProveedorPersonaEntity> contactos) {
+        this.contactos = contactos;
+    }
+
+    public List<CuentaBancoEntity> getCuentasBanco() {
+        return cuentasBanco;
+    }
+
+    public void setCuentasBanco(List<CuentaBancoEntity> cuentasBanco) {
+        this.cuentasBanco = cuentasBanco;
     }
 }

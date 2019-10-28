@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.heystyles.common.types.DomainBean;
 import org.hibernate.validator.constraints.NotBlank;
 
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Cargo extends DomainBean<Long> {
 

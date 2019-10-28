@@ -3,7 +3,7 @@ package com.heystyles.usuarios.api.converter;
 import com.heystyles.usuarios.api.entity.Personable;
 import com.heystyles.usuarios.core.domain.Persona;
 
-public class PersonableEntityToPersona<T extends Personable, D extends Persona> {
+public class PersonableEntityToPersonaConverter<T extends Personable, D extends Persona> {
 
     public void convertPersona(T entity, D bean) {
         bean.setNombres(entity.getNombres());

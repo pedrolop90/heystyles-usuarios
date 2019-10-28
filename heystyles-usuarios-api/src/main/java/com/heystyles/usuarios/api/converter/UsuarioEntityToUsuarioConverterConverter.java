@@ -6,7 +6,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UsuarioEntityToUsuarioConverter extends PersonableEntityToPersona<UsuarioEntity, Usuario>
+public class UsuarioEntityToUsuarioConverterConverter extends PersonableEntityToPersonaConverter<UsuarioEntity, Usuario>
         implements Converter<UsuarioEntity, Usuario> {
     @Override
     public Usuario convert(UsuarioEntity entity) {

@@ -3,10 +3,18 @@ package com.heystyles.usuarios.api.controller;
 import com.heystyles.common.response.Responses;
 import com.heystyles.common.types.BaseResponse;
 import com.heystyles.common.types.IdResponse;
+import com.heystyles.usuarios.api.service.CuentaBancoService;
+import com.heystyles.usuarios.api.service.ProveedorPersonaService;
 import com.heystyles.usuarios.api.service.ProveedorService;
+import com.heystyles.usuarios.core.domain.CuentaBanco;
+import com.heystyles.usuarios.core.domain.Persona;
 import com.heystyles.usuarios.core.domain.Proveedor;
+import com.heystyles.usuarios.core.domain.ProveedorExtended;
+import com.heystyles.usuarios.core.dto.CuentaBancoListResponse;
+import com.heystyles.usuarios.core.dto.PersonaListResponse;
+import com.heystyles.usuarios.core.dto.ProveedorExtendedResponse;
 import com.heystyles.usuarios.core.dto.ProveedorListResponse;
-import com.heystyles.usuarios.core.dto.ProveedorResponse;
+import com.heystyles.usuarios.core.dto.ProveedorRequest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -36,6 +44,12 @@ public class ProveedorController {
     @Autowired
     private ProveedorService proveedorService;
 
+    @Autowired
+    private CuentaBancoService cuentaBancoService;
+
+    @Autowired
+    private ProveedorPersonaService proveedorPersonaService;
+
     @ApiOperation(value = "Permite Crear un Proveedor en la base de datos.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Proveedor Creado")
@@ -43,8 +57,8 @@ public class ProveedorController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<IdResponse> insert(
-            @NotNull @Valid @RequestBody Proveedor proveedor) {
-        Long idPersona = proveedorService.insert(proveedor);
+            @NotNull @Valid @RequestBody ProveedorRequest request) {
+        Long idPersona = proveedorService.insert(request);
         return Responses.responseEntity(new IdResponse(idPersona));
     }
 
@@ -57,8 +71,8 @@ public class ProveedorController {
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> update(
             @NotNull @PathVariable(name = "proveedorId") Long proveedorId,
-            @NotNull @Valid @RequestBody Proveedor proveedor) {
-        proveedorService.update(proveedorId, proveedor);
+            @NotNull @Valid @RequestBody ProveedorRequest request) {
+        proveedorService.update(proveedorId, request);
         return Responses.successEntity("Actualizacion correcta");
     }
 
@@ -80,10 +94,10 @@ public class ProveedorController {
             @ApiResponse(code = 404, message = "Proveedor no encontrado.")
     })
     @GetMapping(value = "/{proveedorId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProveedorResponse> getProveedor(
+    public ResponseEntity<ProveedorExtendedResponse> getProveedor(
             @NotNull @PathVariable(name = "proveedorId") Long proveedorId) {
-        Proveedor proveedor = proveedorService.getProveedor(proveedorId);
-        return Responses.responseEntity(new ProveedorResponse(proveedor));
+        ProveedorExtended proveedorExtended = proveedorService.getProveedor(proveedorId);
+        return Responses.responseEntity(new ProveedorExtendedResponse(proveedorExtended));
     }
 
     @ApiOperation(value = "Permite Listar todos los Proveedores de la base de datos")
@@ -98,4 +112,27 @@ public class ProveedorController {
     }
 
 
+    @ApiOperation(value = "Permite Buscar las Cuentas de Banco de un Proveedor de la base de datos")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Proveedor Encontrado."),
+            @ApiResponse(code = 404, message = "Proveedor no encontrado.")
+    })
+    @GetMapping(value = "/{proveedorId}/cuentaBanco", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<CuentaBancoListResponse> getCuentasBanco(
+            @NotNull @PathVariable(name = "proveedorId") Long proveedorId) {
+        List<CuentaBanco> cuentasBanco = cuentaBancoService.findByProveedoId(proveedorId);
+        return Responses.responseEntity(new CuentaBancoListResponse(cuentasBanco));
+    }
+
+    @ApiOperation(value = "Permite Buscar Los Contactos de un Proveedor de la base de datos")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Proveedor Encontrado."),
+            @ApiResponse(code = 404, message = "Proveedor no encontrado.")
+    })
+    @GetMapping(value = "/{proveedorId}/contacto", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PersonaListResponse> getContactos(
+            @NotNull @PathVariable(name = "proveedorId") Long proveedorId) {
+        List<Persona> contactos = proveedorPersonaService.findContactosByProveedor(proveedorId);
+        return Responses.responseEntity(new PersonaListResponse(contactos));
+    }
 }

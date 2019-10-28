@@ -19,4 +19,6 @@ public interface MessageKeys extends com.heystyles.common.util.MessageKeys {
     String CARGO_NOMBRE_DUPLICATED = "heystyles.cargo.nombre.duplicated";
 
     String CARGO_USUARIO_REFERENCIADOS_NOT_DELETE = "heystyles.cargo.usuarios-referenciados.not-delete";
+
+    String CUENTA_BANCO_NOT_FOUND = "heystyles.usuarios.cuenta-banco.not-found";
 }

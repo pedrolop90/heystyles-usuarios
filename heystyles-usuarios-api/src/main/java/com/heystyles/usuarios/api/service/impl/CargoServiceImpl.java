@@ -8,7 +8,9 @@ import com.heystyles.usuarios.api.entity.CargoEntity;
 import com.heystyles.usuarios.api.message.MessageKeys;
 import com.heystyles.usuarios.api.service.CargoService;
 import com.heystyles.usuarios.core.domain.Cargo;
-import dto.RequestRolAuth0;
+import com.heystyles.usuarios.core.domain.CargoExtended;
+import com.heystyles.usuarios.core.dto.CargoRequest;
+import domain.RolAuth0;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.data.repository.CrudRepository;
@@ -40,28 +42,36 @@ public class CargoServiceImpl
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public Long insert(Cargo bean) {
-        Long id = super.insert(bean);
-        Optional.ofNullable(createRol(bean.getNombre()))
+    public Long insert(CargoRequest request) {
+        Long id = super.insert(request.getCargo());
+        Optional.ofNullable(createRol(request))
                 .ifPresent(s -> {
-                    bean.setId(id);
-                    bean.setIdSecurity(s);
-                    update(bean);
+                    request.getCargo().setId(id);
+                    request.getCargo().setId(s);
+                    update(request.getCargo());
                 });
         return id;
     }
 
-    private Long createRol(String nombre) {
-        RequestRolAuth0 requestRolAuth0 = new RequestRolAuth0();
-        requestRolAuth0.setName(nombre);
-        requestRolAuth0.setDescription(nombre);
-        return rolClient.create(requestRolAuth0);
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void update(Long idCargo, CargoRequest request) {
+        update(idCargo, request.getCargo());
+    }
+
+    private Long createRol(CargoRequest cargoRequest) {
+        RolAuth0 rolAuth0 = new RolAuth0();
+        rolAuth0.setNombre(cargoRequest.getCargo().getNombre());
+        rolAuth0.setDescripcion(cargoRequest.getCargo().getNombre());
+        rolAuth0.setPermisos(cargoRequest.getPermisos());
+        return rolClient.create(rolAuth0);
     }
 
     @Override
-    public Cargo getCargo(Long cargoId) {
-        return Optional.ofNullable(findById(cargoId))
+    public CargoExtended getCargo(Long cargoId) {
+        CargoEntity cargoEntity = Optional.ofNullable(cargoDao.findOne(cargoId))
                 .orElseThrow(() -> APIExceptions.objetoNoEncontrado(messageSource.getMessage(
                         MessageKeys.CARGO_NOT_FOUND, new String[]{String.valueOf(cargoId)}, getLocale())));
+        return getConverterService().convertTo(cargoEntity, CargoExtended.class);
     }
 }

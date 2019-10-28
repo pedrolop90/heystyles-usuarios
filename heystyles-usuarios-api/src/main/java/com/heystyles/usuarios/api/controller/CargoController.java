@@ -5,8 +5,9 @@ import com.heystyles.common.types.BaseResponse;
 import com.heystyles.common.types.IdResponse;
 import com.heystyles.usuarios.api.service.CargoService;
 import com.heystyles.usuarios.core.domain.Cargo;
+import com.heystyles.usuarios.core.dto.CargoExtendedResponse;
 import com.heystyles.usuarios.core.dto.CargoListResponse;
-import com.heystyles.usuarios.core.dto.CargoResponse;
+import com.heystyles.usuarios.core.dto.CargoRequest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -43,8 +44,8 @@ public class CargoController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<IdResponse> insert(
-            @NotNull @Valid @RequestBody Cargo cargo) {
-        Long idCargo = cargoService.insert(cargo);
+            @NotNull @Valid @RequestBody CargoRequest request) {
+        Long idCargo = cargoService.insert(request);
         return Responses.responseEntity(new IdResponse(idCargo));
     }
 
@@ -57,8 +58,8 @@ public class CargoController {
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> update(
             @NotNull @PathVariable(name = "cargoId") Long cargoId,
-            @NotNull @Valid @RequestBody Cargo cargo) {
-        cargoService.update(cargoId, cargo);
+            @NotNull @Valid @RequestBody CargoRequest request) {
+        cargoService.update(cargoId, request);
         return Responses.successEntity("Actualizacion correcta");
     }
 
@@ -74,16 +75,15 @@ public class CargoController {
         return Responses.successEntity("Eliminado correcto");
     }
 
-    @ApiOperation(value = "Permite Buscar un Cargo en la base de datos")
+    @ApiOperation(value = "Permite Buscar un Cargo con su permisos en la base de datos")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Cargo Encontrado."),
             @ApiResponse(code = 404, message = "Cargo no encontrado.")
     })
     @GetMapping(value = "/{cargoId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CargoResponse> getCargo(
+    public ResponseEntity<CargoExtendedResponse> getCargo(
             @NotNull @PathVariable(name = "cargoId") Long cargoId) {
-        Cargo cargo = cargoService.getCargo(cargoId);
-        return Responses.responseEntity(new CargoResponse(cargo));
+        return Responses.responseEntity(new CargoExtendedResponse(cargoService.getCargo(cargoId)));
     }
 
     @ApiOperation(value = "Permite Listar todos los Cargos de la base de datos")

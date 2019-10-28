@@ -5,12 +5,18 @@ import com.heystyles.common.service.impl.ServiceImpl;
 import com.heystyles.usuarios.api.dao.ProveedorDao;
 import com.heystyles.usuarios.api.entity.ProveedorEntity;
 import com.heystyles.usuarios.api.message.MessageKeys;
+import com.heystyles.usuarios.api.service.CuentaBancoService;
+import com.heystyles.usuarios.api.service.ProveedorPersonaService;
 import com.heystyles.usuarios.api.service.ProveedorService;
 import com.heystyles.usuarios.core.domain.Proveedor;
+import com.heystyles.usuarios.core.domain.ProveedorExtended;
+import com.heystyles.usuarios.core.dto.ProveedorRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -23,6 +29,12 @@ public class ProveedorServiceImpl extends ServiceImpl<Proveedor, ProveedorEntity
     private ProveedorDao proveedorDao;
 
     @Autowired
+    private ProveedorPersonaService proveedorPersonaService;
+
+    @Autowired
+    private CuentaBancoService cuentaBancoService;
+
+    @Autowired
     private MessageSource messageSource;
 
     @Override
@@ -31,10 +43,28 @@ public class ProveedorServiceImpl extends ServiceImpl<Proveedor, ProveedorEntity
     }
 
     @Override
-    public Proveedor getProveedor(Long proveedorId) {
-        return Optional.ofNullable(findById(proveedorId))
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public Long insert(ProveedorRequest request) {
+        Long id = super.insert(request.getProveedor());
+        cuentaBancoService.uppsert(request.getCuentasBancos());
+        proveedorPersonaService.uppsert(id, request.getContactos());
+        return id;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void update(Long proveedorId, ProveedorRequest request) {
+        update(proveedorId, request.getProveedor());
+        cuentaBancoService.uppsert(request.getCuentasBancos());
+        proveedorPersonaService.uppsert(proveedorId, request.getContactos());
+    }
+
+    @Override
+    public ProveedorExtended getProveedor(Long proveedorId) {
+        ProveedorEntity proveedorEntity = Optional.ofNullable(proveedorDao.findOne(proveedorId))
                 .orElseThrow(() -> APIExceptions.objetoNoEncontrado(
                         messageSource.getMessage(MessageKeys.PROVEEDOR_NOT_FOUND,
-                                new String[]{String.valueOf(proveedorId)}, getLocale())));
+                                                 new String[]{String.valueOf(proveedorId)}, getLocale())));
+        return getConverterService().convertTo(proveedorEntity, ProveedorExtended.class);
     }
 }
