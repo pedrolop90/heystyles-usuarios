@@ -27,7 +27,7 @@ public class ClientConfig {
     }
 
     @Bean
-    public UserCliente userCliente(RestTemplate restTemplate) {
+        public UserCliente userCliente(RestTemplate restTemplate) {
         return new UserClienteImpl(clientProperties.getSeguridadUrlBase(), restTemplate);
     }
 

@@ -13,7 +13,7 @@ public class Cargo extends DomainBean<Long> {
     private String nombre;
     private Long nivel;
 
-    private String idSecurity;
+    private Long idSecurity;
 
     @Override
     public Long getId() {
@@ -41,11 +41,11 @@ public class Cargo extends DomainBean<Long> {
         this.nivel = nivel;
     }
 
-    public String getIdSecurity() {
+    public Long getIdSecurity() {
         return idSecurity;
     }
 
-    public void setIdSecurity(String idSecurity) {
+    public void setIdSecurity(Long idSecurity) {
         this.idSecurity = idSecurity;
     }
 }

@@ -32,7 +32,7 @@ public class CargoUniqueValidator implements Validator<Cargo> {
     public List<ValidationError> validate(Cargo cargo) {
         List<ValidationError> errors = new ArrayList<>();
         CargoEntity cargoNombre = cargoDao.findByNombre(cargo.getNombre());
-        if (cargoNombre != null && !Objects.equals(cargoNombre.getNombre(), cargo.getNombre())) {
+        if (cargoNombre != null && !Objects.equals(cargoNombre.getId(), cargo.getId())) {
             errors.add(new ValidationError("Nombre", messageSource.getMessage(
                     MessageKeys.CARGO_NOMBRE_DUPLICATED,
                     new String[]{String.valueOf(cargo.getNombre())}, getLocale())));

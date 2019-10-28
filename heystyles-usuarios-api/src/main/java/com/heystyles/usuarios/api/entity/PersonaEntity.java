@@ -48,7 +48,7 @@ public class PersonaEntity extends AuditableEntity<Long> implements Personable {
     private String email;
 
     @Column(name = "ID_SECURITY")
-    private String idSecurity;
+    private Long idSecurity;
 
     @Column(name = "FECHA_NACIMIENTO", nullable = false)
     @Convert(converter = LocalDateAttributeConverter.class)
@@ -141,11 +141,13 @@ public class PersonaEntity extends AuditableEntity<Long> implements Personable {
         this.email = email;
     }
 
-    public String getIdSecurity() {
+    @Override
+    public Long getIdSecurity() {
         return idSecurity;
     }
 
-    public void setIdSecurity(String idSecurity) {
+    @Override
+    public void setIdSecurity(Long idSecurity) {
         this.idSecurity = idSecurity;
     }
 

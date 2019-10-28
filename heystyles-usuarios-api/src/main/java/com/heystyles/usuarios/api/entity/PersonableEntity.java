@@ -7,6 +7,7 @@ import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.FetchType;
@@ -14,9 +15,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
-import javax.validation.constraints.NotNull;
+import javax.persistence.OneToOne;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -32,12 +32,17 @@ public abstract class PersonableEntity extends AuditableEntity<Long> implements 
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ID_PERSONA", nullable = false)
+    @OneToOne(fetch = FetchType.EAGER, optional = false,
+            cascade = {
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.DETACH,
+                    CascadeType.PERSIST
+            })
+    @JoinColumn(name = "ID_PERSONA")
     private PersonaEntity persona = new PersonaEntity();
 
     @CreatedDate
-    @NotNull
     @Column(name = "CREATED_DATE")
     @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime createdDate;
@@ -116,12 +121,12 @@ public abstract class PersonableEntity extends AuditableEntity<Long> implements 
     }
 
     @Override
-    public String getIdSecurity() {
+    public Long getIdSecurity() {
         return persona.getIdSecurity();
     }
 
     @Override
-    public void setIdSecurity(String idSecurity) {
+    public void setIdSecurity(Long idSecurity) {
         persona.setIdSecurity(idSecurity);
     }
 

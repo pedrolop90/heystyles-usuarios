@@ -7,9 +7,9 @@ import domain.EstadoUser;
 public interface PersonableService<D extends DomainBean<ID>, ID>
         extends Service<D, ID> {
 
-    void registerUser(String numeroDocumento, String rolId);
+    void registerUser(String numeroDocumento, Long rolId);
 
-    void updateUserRol(String numeroDocumento, String rolLastId, String rolNewId);
+    void updateUserRol(String numeroDocumento, Long rolLastId, Long rolNewId);
 
-    EstadoUser removeRolToUser(String numeroDocumento, String rolId);
+    EstadoUser removeRolToUser(String numeroDocumento, Long rolId);
 }

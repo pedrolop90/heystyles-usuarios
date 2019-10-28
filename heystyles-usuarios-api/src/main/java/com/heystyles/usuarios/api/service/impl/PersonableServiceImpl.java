@@ -35,19 +35,17 @@ public abstract class PersonableServiceImpl<D extends DomainBean<ID>, T extends 
     private MessageSource messageSource;
 
     @Override
-    public void registerUser(String numeroDocumento, String rolId) {
+    public void registerUser(String numeroDocumento, Long rolId) {
         PersonaEntity personaEntity = personaDao.findByNumeroDocumento(numeroDocumento);
 
         if (personaEntity.getIdSecurity() == null) {
             String password = UUID.randomUUID().toString().substring(0, 8);
             UserAuth0 userAuth0 = new UserAuth0();
-            userAuth0.setUserName(personaEntity.getNumeroDocumento());
-            userAuth0.setNombre(personaEntity.getNombres());
-            userAuth0.setApellido(personaEntity.getApellidos());
+            userAuth0.setUsuario(personaEntity.getNumeroDocumento());
             userAuth0.setEmail(personaEntity.getEmail());
             userAuth0.setPassword(password);
             userAuth0.setRoleIdSecurity(rolId);
-            String idSecurity = userClient.createUser(userAuth0);
+            Long idSecurity = userClient.createUser(userAuth0);
             personaEntity.setIdSecurity(idSecurity);
             personaDao.save(personaEntity);
         }
@@ -59,7 +57,7 @@ public abstract class PersonableServiceImpl<D extends DomainBean<ID>, T extends 
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public void updateUserRol(String numeroDocumento, String rolLastId, String rolNewId) {
+    public void updateUserRol(String numeroDocumento, Long rolLastId, Long rolNewId) {
         PersonaEntity entity = Optional.ofNullable(personaDao.findByNumeroDocumento(numeroDocumento))
                 .orElseThrow(() -> APIExceptions
                         .objetoNoEncontrado(messageSource.getMessage(
@@ -67,20 +65,20 @@ public abstract class PersonableServiceImpl<D extends DomainBean<ID>, T extends 
                                 new String[]{String.valueOf(numeroDocumento)}, getLocale())));
 
         if (entity.getIdSecurity() != null) {
-            userClient.updateRolUser(entity.getIdSecurity(), rolLastId, rolNewId);
+            //userClient.updateRolUser(entity.getIdSecurity(), rolLastId, rolNewId);
         }
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public EstadoUser removeRolToUser(String numeroDocumento, String rolId) {
+    public EstadoUser removeRolToUser(String numeroDocumento, Long rolId) {
         PersonaEntity entity = Optional.ofNullable(personaDao.findByNumeroDocumento(numeroDocumento))
                 .orElseThrow(() -> APIExceptions
                         .objetoNoEncontrado(messageSource.getMessage(MessageKeys.PERSONA_NUMERO_DOCUMENTO_NOT_FOUND,
                                                                      new String[] {String.valueOf(numeroDocumento)}, getLocale())));
 
         if (entity.getIdSecurity() != null) {
-            return userClient.removeRolToUser(entity.getIdSecurity(), rolId);
+            //return userClient.removeRolToUser(entity.getIdSecurity(), rolId);
         }
         return EstadoUser.REMOVIDO_ROL;
     }

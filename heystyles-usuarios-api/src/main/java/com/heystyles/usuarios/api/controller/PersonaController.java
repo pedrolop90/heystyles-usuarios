@@ -97,5 +97,4 @@ public class PersonaController {
         return Responses.responseEntity(new PersonaListResponse(personas));
     }
 
-
 }

@@ -51,7 +51,7 @@ public class CargoServiceImpl
         return id;
     }
 
-    private String createRol(String nombre) {
+    private Long createRol(String nombre) {
         RequestRolAuth0 requestRolAuth0 = new RequestRolAuth0();
         requestRolAuth0.setName(nombre);
         requestRolAuth0.setDescription(nombre);

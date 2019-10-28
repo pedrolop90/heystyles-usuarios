@@ -36,7 +36,7 @@ public class CargoEntity extends AuditableEntity<Long> implements SoftDeletable 
     private Long nivel;
 
     @Column(name = "ID_SECURITY", nullable = false)
-    private String idSecurity;
+    private Long idSecurity;
 
     @Column(name = "S_DELETE", nullable = false)
     private boolean delete;
@@ -80,11 +80,11 @@ public class CargoEntity extends AuditableEntity<Long> implements SoftDeletable 
         this.nivel = nivel;
     }
 
-    public String getIdSecurity() {
+    public Long getIdSecurity() {
         return idSecurity;
     }
 
-    public void setIdSecurity(String idSecurity) {
+    public void setIdSecurity(Long idSecurity) {
         this.idSecurity = idSecurity;
     }
 

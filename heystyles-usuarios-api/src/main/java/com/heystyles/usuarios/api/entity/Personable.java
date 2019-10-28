@@ -26,9 +26,9 @@ public interface Personable {
 
     void setEmail(String email);
 
-    String getIdSecurity();
+    Long getIdSecurity();
 
-    void setIdSecurity(String idSecurity);
+    void setIdSecurity(Long idSecurity);
 
     LocalDate getFechaNacimiento();
 

@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -33,25 +31,11 @@ public class PersonaServiceImpl
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public Long insert(Persona bean) {
-        Long id = super.insert(bean);
-        registerUser(bean.getNumeroDocumento());
-        return id;
-    }
-
-    @Override
     public Persona getPersona(Long personaId) {
-        return Optional.ofNullable(findById(personaId))
+        return Optional.ofNullable(super.findById(personaId))
                 .orElseThrow(() -> APIExceptions.objetoNoEncontrado(messageSource.getMessage(
                         MessageKeys.PERSONA_NOT_FOUND,
                         new String[]{String.valueOf(personaId)}, getLocale())));
-    }
 
-    public void registerUser(String numeroDocumento) {
-        /**
-         * Debe implementarse el rol id....
-         */
-        super.registerUser(numeroDocumento, "aaa");
     }
 }

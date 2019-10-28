@@ -38,6 +38,7 @@
             <artifactId>seguridad-cliente</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
+
         <!-- Spring WEB -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -118,6 +119,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
+
+        <!-- Google Guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>28.0-jre</version>
+        </dependency>
+        <!-- Spring Actuator -->
+
+
     </dependencies>
 
 

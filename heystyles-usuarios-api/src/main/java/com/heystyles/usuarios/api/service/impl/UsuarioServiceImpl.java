@@ -44,8 +44,8 @@ public class UsuarioServiceImpl extends PersonableServiceImpl<Usuario, UsuarioEn
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Long insert(Usuario bean) {
-        Long id = insert(bean);
-        String rolId = cargoService.getCargo(bean.getCargoId()).getIdSecurity();
+        Long id = super.insert(bean);
+        Long rolId = cargoService.getCargo(bean.getCargoId()).getIdSecurity();
         registerUser(bean.getNumeroDocumento(), rolId);
         return id;
     }
@@ -55,7 +55,6 @@ public class UsuarioServiceImpl extends PersonableServiceImpl<Usuario, UsuarioEn
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void update(Long id, Usuario bean) {
         Usuario oldPersonal = getUsuario(id);
-
         Usuario newPersonal = bean;
         newPersonal.setId(id);
 
