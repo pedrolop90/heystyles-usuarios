@@ -18,6 +18,7 @@ public class ProveedorEntityToProveedorExtendedConverter implements Converter<Pr
     @Override
     public ProveedorExtended convert(ProveedorEntity entity) {
         ProveedorExtended bean = new ProveedorExtended();
+        bean.setId(entity.getId());
         bean.setNombre(entity.getNombre());
         bean.setDescripcion(entity.getDescripcion());
         bean.setTelefono(entity.getTelefono());
