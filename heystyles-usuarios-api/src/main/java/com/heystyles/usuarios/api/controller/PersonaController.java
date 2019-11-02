@@ -53,12 +53,9 @@ public class PersonaController {
             @ApiResponse(code = 200, message = "Persona Actualizada"),
             @ApiResponse(code = 404, message = "Persona no encontrada.")
     })
-    @PutMapping(value = "/{personaId}",
-            consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> update(
-            @NotNull @PathVariable(name = "personaId") Long personaId,
-            @NotNull @Valid @RequestBody Persona persona) {
-        personaService.update(personaId, persona);
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BaseResponse> update(@NotNull @Valid @RequestBody Persona persona) {
+        personaService.update(persona);
         return Responses.successEntity("Actualizacion correcta");
     }
 

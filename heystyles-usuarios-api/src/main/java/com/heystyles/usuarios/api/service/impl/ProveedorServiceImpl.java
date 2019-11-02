@@ -53,10 +53,10 @@ public class ProveedorServiceImpl extends ServiceImpl<Proveedor, ProveedorEntity
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void update(Long proveedorId, ProveedorRequest request) {
-        update(proveedorId, request.getProveedor());
+    public void update(ProveedorRequest request) {
+        update(request.getProveedor());
         cuentaBancoService.uppsert(request.getCuentasBancos());
-        proveedorPersonaService.uppsert(proveedorId, request.getContactos());
+        proveedorPersonaService.uppsert(request.getProveedor().getId(), request.getContactos());
     }
 
     @Override

@@ -47,7 +47,6 @@ public class CargoServiceImpl
         Optional.ofNullable(createRol(request))
                 .ifPresent(s -> {
                     request.getCargo().setId(id);
-                    request.getCargo().setId(s);
                     update(request.getCargo());
                 });
         return id;
@@ -55,8 +54,13 @@ public class CargoServiceImpl
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void update(Long idCargo, CargoRequest request) {
-        update(idCargo, request.getCargo());
+    public void update(CargoRequest request) {
+        update(request.getCargo());
+        RolAuth0 rolAuth0 = new RolAuth0();
+        rolAuth0.setNombre(request.getCargo().getNombre());
+        rolAuth0.setDescripcion(request.getCargo().getNombre());
+        rolAuth0.setPermisos(request.getPermisos());
+        rolClient.update(request.getCargo().getIdSecurity(), rolAuth0);
     }
 
     private Long createRol(CargoRequest cargoRequest) {

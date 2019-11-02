@@ -54,12 +54,9 @@ public class CargoController {
             @ApiResponse(code = 200, message = "Cargo Actualizado."),
             @ApiResponse(code = 404, message = "Cargo no encontrado.")
     })
-    @PutMapping(value = "/{cargoId}",
-            consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> update(
-            @NotNull @PathVariable(name = "cargoId") Long cargoId,
-            @NotNull @Valid @RequestBody CargoRequest request) {
-        cargoService.update(cargoId, request);
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BaseResponse> update(@NotNull @Valid @RequestBody CargoRequest request) {
+        cargoService.update(request);
         return Responses.successEntity("Actualizacion correcta");
     }
 

@@ -67,12 +67,9 @@ public class ProveedorController {
             @ApiResponse(code = 200, message = "Proveedor Actualizado"),
             @ApiResponse(code = 404, message = "Proveedor no encontrado.")
     })
-    @PutMapping(value = "/{proveedorId}",
-            consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> update(
-            @NotNull @PathVariable(name = "proveedorId") Long proveedorId,
-            @NotNull @Valid @RequestBody ProveedorRequest request) {
-        proveedorService.update(proveedorId, request);
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BaseResponse> update(@NotNull @Valid @RequestBody ProveedorRequest request) {
+        proveedorService.update(request);
         return Responses.successEntity("Actualizacion correcta");
     }
 

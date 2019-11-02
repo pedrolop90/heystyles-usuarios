@@ -9,7 +9,7 @@ public interface ProveedorService extends Service<Proveedor, Long> {
 
     Long insert(ProveedorRequest request);
 
-    void update(Long proveedorId, ProveedorRequest request);
+    void update(ProveedorRequest request);
 
     ProveedorExtended getProveedor(Long proveedorId);
 

@@ -9,7 +9,7 @@ public interface CargoService extends Service<Cargo, Long> {
 
     Long insert(CargoRequest request);
 
-    void update(Long idCargo, CargoRequest request);
+    void update(CargoRequest request);
 
     CargoExtended getCargo(Long cargoId);
 }
