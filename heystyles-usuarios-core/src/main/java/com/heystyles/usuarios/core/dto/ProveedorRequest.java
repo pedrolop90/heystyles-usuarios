@@ -5,7 +5,6 @@ import com.heystyles.usuarios.core.domain.Persona;
 import com.heystyles.usuarios.core.domain.Proveedor;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 public class ProveedorRequest {
@@ -13,13 +12,9 @@ public class ProveedorRequest {
     @NotNull
     private Proveedor proveedor;
 
-    @NotNull
     private List<Persona> contactos;
 
-    @NotNull
-    @Size(min = 1)
     private List<CuentaBanco> cuentasBancos;
-
 
     public Proveedor getProveedor() {
         return proveedor;
