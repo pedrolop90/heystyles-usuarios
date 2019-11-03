@@ -46,7 +46,7 @@ public class ProveedorServiceImpl extends ServiceImpl<Proveedor, ProveedorEntity
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Long insert(ProveedorRequest request) {
         Long id = super.insert(request.getProveedor());
-        cuentaBancoService.uppsert(request.getCuentasBancos());
+        cuentaBancoService.uppsert(id, request.getCuentasBancos());
         proveedorPersonaService.uppsert(id, request.getContactos());
         return id;
     }
@@ -55,7 +55,7 @@ public class ProveedorServiceImpl extends ServiceImpl<Proveedor, ProveedorEntity
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void update(ProveedorRequest request) {
         update(request.getProveedor());
-        cuentaBancoService.uppsert(request.getCuentasBancos());
+        cuentaBancoService.uppsert(request.getProveedor().getId(), request.getCuentasBancos());
         proveedorPersonaService.uppsert(request.getProveedor().getId(), request.getContactos());
     }
 

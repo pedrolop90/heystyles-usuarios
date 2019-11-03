@@ -11,6 +11,7 @@ public class UsuarioEntityToUsuarioConverterConverter extends PersonableEntityTo
     @Override
     public Usuario convert(UsuarioEntity entity) {
         Usuario bean = new Usuario();
+        bean.setId(entity.getId());
         bean.setCargoId(entity.getCargo().getId());
         convertPersona(entity, bean);
         return bean;

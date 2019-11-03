@@ -43,11 +43,14 @@ public class CuentaBancoToCuentaBancoEntityConverter implements Converter<Cuenta
         entity.setNombreBanco(bean.getNombreBanco());
         entity.setNumeroCuenta(bean.getNumeroCuenta());
         entity.setTipoCuenta(bean.getTipoCuenta());
-        ProveedorEntity proveedorEntity = Optional.ofNullable(proveedorDao.findOne(bean.getProveedorId()))
-                .orElseThrow(() -> APIExceptions.objetoNoEncontrado(
-                        messageSource.getMessage(MessageKeys.PROVEEDOR_NOT_FOUND,
-                                                 new String[]{String.valueOf(bean.getProveedorId())}, getLocale())));
-        entity.setProveedor(proveedorEntity);
+        if (bean.getProveedorId() != null) {
+            ProveedorEntity proveedorEntity = Optional.ofNullable(proveedorDao.findOne(bean.getProveedorId()))
+                    .orElseThrow(() -> APIExceptions.objetoNoEncontrado(
+                            messageSource.getMessage(MessageKeys.PROVEEDOR_NOT_FOUND,
+                                                     new String[]{String.valueOf(bean.getProveedorId())}, getLocale())));
+
+            entity.setProveedor(proveedorEntity);
+        }
         return entity;
     }
 }

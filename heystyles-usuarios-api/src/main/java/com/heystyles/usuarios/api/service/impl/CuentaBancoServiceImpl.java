@@ -26,16 +26,19 @@ public class CuentaBancoServiceImpl
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void uppsert(List<CuentaBanco> cuentasBanco) {
-        cuentasBanco.forEach(cuentaBanco -> {
-            if (cuentaBanco.getId() == null) {
-                insert(cuentaBanco);
-            }
-            else {
-                update(cuentaBanco);
-            }
-        });
+    //@Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void uppsert(Long proveedorId, List<CuentaBanco> cuentasBanco) {
+        if (cuentasBanco != null) {
+            cuentasBanco.forEach(cuentaBanco -> {
+                cuentaBanco.setProveedorId(proveedorId);
+                if (cuentaBanco.getId() == null) {
+                    insert(cuentaBanco);
+                }
+                else {
+                    update(cuentaBanco);
+                }
+            });
+        }
     }
 
     @Override
