@@ -83,6 +83,18 @@ public class PersonaController {
         return Responses.responseEntity(new PersonaResponse(persona));
     }
 
+    @ApiOperation(value = "Permite Buscar una Persona por el numero de documento en la base de datos")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Persona Encontrada."),
+            @ApiResponse(code = 404, message = "Persona no encontrada.")
+    })
+    @GetMapping(value = "/numeroDocumento/{numeroDocumento}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PersonaResponse> getPersonaByNumeroDocumento(
+            @NotNull @PathVariable(name = "numeroDocumento") String numeroDocumento) {
+        Persona persona = personaService.getPersonaByNumeroDocumento(numeroDocumento);
+        return Responses.responseEntity(new PersonaResponse(persona));
+    }
+
     @ApiOperation(value = "Permite Listar todas las Persona de la base de datos")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Persoans Encontradas."),

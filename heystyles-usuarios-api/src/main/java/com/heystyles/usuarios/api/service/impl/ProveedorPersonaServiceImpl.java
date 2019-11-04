@@ -1,6 +1,7 @@
 package com.heystyles.usuarios.api.service.impl;
 
 import com.heystyles.common.service.ConverterService;
+import com.heystyles.usuarios.api.dao.ProveedorDao;
 import com.heystyles.usuarios.api.dao.ProveedorPersonaDao;
 import com.heystyles.usuarios.api.entity.PersonaEntity;
 import com.heystyles.usuarios.api.entity.ProveedorEntity;
@@ -22,15 +23,19 @@ public class ProveedorPersonaServiceImpl implements ProveedorPersonaService {
     private ProveedorPersonaDao proveedorPersonaDao;
 
     @Autowired
+    private ProveedorDao proveedorDao;
+
+    @Autowired
     private ConverterService converterService;
 
     @Override
     public void uppsert(Long proveedorId, List<Persona> contactos) {
-        List<ProveedorPersonaEntity> existing = proveedorPersonaDao.findByProveedorId(proveedorId);
-        if (existing.size() == 0) {
+        if (contactos == null || contactos.size() == 0) {
             return;
         }
-        ProveedorEntity rolEntity = existing.get(0).getProveedor();
+        List<ProveedorPersonaEntity> existing = proveedorPersonaDao.findByProveedorId(proveedorId);
+
+        ProveedorEntity proveedorEntity = proveedorDao.findOne(proveedorId);
         List<ProveedorPersonaEntity> toDelete = new ArrayList<>();
         List<ProveedorPersonaEntity> toSave = new ArrayList<>();
 
@@ -52,7 +57,7 @@ public class ProveedorPersonaServiceImpl implements ProveedorPersonaService {
                 .filter(l -> !oldPersonasIds.contains(l))
                 .forEach(l -> {
                     ProveedorPersonaEntity entity = new ProveedorPersonaEntity();
-                    entity.setProveedor(rolEntity);
+                    entity.setProveedor(proveedorEntity);
                     entity.setPersona(new PersonaEntity(l));
                     toSave.add(entity);
                 });

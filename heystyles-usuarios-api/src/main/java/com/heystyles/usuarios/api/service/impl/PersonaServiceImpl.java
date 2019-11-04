@@ -38,4 +38,13 @@ public class PersonaServiceImpl
                         new String[]{String.valueOf(personaId)}, getLocale())));
 
     }
+
+    @Override
+    public Persona getPersonaByNumeroDocumento(String numeroDocumento) {
+        PersonaEntity personaEntity = personaDao.findByNumeroDocumento(numeroDocumento);
+        if (personaEntity != null) {
+            return getConverterService().convertTo(personaEntity, Persona.class);
+        }
+        return null;
+    }
 }
