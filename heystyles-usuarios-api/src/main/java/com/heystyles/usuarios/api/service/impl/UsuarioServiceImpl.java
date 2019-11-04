@@ -53,10 +53,9 @@ public class UsuarioServiceImpl extends PersonableServiceImpl<Usuario, UsuarioEn
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void update(Long id, Usuario bean) {
-        Usuario oldPersonal = getUsuario(id);
+    public void update(Usuario bean) {
+        Usuario oldPersonal = getUsuario(bean.getId());
         Usuario newPersonal = bean;
-        newPersonal.setId(id);
 
         CargoEntity cargoOld = Optional.ofNullable(
                 cargoDao.findOne(oldPersonal.getCargoId()))
@@ -65,7 +64,7 @@ public class UsuarioServiceImpl extends PersonableServiceImpl<Usuario, UsuarioEn
                                 MessageKeys.CARGO_NOT_FOUND,
                                 new String[]{String.valueOf(oldPersonal.getCargoId())}, getLocale())));
 
-        super.update(id, bean);
+        super.update(bean);
         CargoEntity cargoNew = cargoDao.findOne(newPersonal.getCargoId());
         updateUserRol(newPersonal.getNumeroDocumento(), cargoOld.getIdSecurity(), cargoNew.getIdSecurity());
     }

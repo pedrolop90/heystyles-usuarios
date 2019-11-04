@@ -108,6 +108,16 @@ public class PersonaEntity extends AuditableEntity<Long> implements Personable {
         this.updatedDate = updatedDate;
     }
 
+    @Override
+    public Long getIdPersona() {
+        return this.id;
+    }
+
+    @Override
+    public void setIdPersona(Long idPersona) {
+        this.id = idPersona;
+    }
+
     public String getNombres() {
         return nombres;
     }

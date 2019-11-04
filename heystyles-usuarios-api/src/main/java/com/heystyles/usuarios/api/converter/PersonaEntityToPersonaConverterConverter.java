@@ -12,7 +12,6 @@ public class PersonaEntityToPersonaConverterConverter
     @Override
     public Persona convert(PersonaEntity entity) {
         Persona bean = new Persona();
-        bean.setId(entity.getId());
         convertPersona(entity, bean);
         return bean;
     }

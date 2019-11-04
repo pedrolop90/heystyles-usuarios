@@ -47,15 +47,25 @@ public class UsuarioToUsuarioEntityConverter implements Converter<Usuario, Usuar
             entity.setPersona(personaEntity);
         }
         else {
-            entity = Optional.ofNullable(usuarioDao.findOne(bean.getId())).orElseThrow(() ->
-                    APIExceptions.objetoNoEncontrado(messageSource.getMessage(MessageKeys.USUARIO_NOT_FOUND,
-                            new String[]{String.valueOf(bean.getId())}, getLocale())));
+            entity = Optional.ofNullable(usuarioDao.findOne(bean.getId()))
+                    .orElseThrow(() -> APIExceptions.objetoNoEncontrado(
+                            messageSource.getMessage(MessageKeys.USUARIO_NOT_FOUND,
+                                                     new String[]{String.valueOf(bean.getId())},
+                                                     getLocale())));
         }
         CargoEntity cargoEntity = Optional.ofNullable(cargoDao.findOne(bean.getCargoId()))
                 .orElseThrow(() -> APIExceptions.objetoNoEncontrado(messageSource.getMessage(
                         MessageKeys.CARGO_NOT_FOUND, new String[]{String.valueOf(bean.getCargoId())}, getLocale())));
         entity.setCargo(cargoEntity);
-        entity.setPersona(converterService.convertTo(bean, PersonaEntity.class));
+        entity.setIdPersona(bean.getIdPersona());
+        entity.setNombres(bean.getNombres());
+        entity.setApellidos(bean.getApellidos());
+        entity.setNumeroDocumento(bean.getNumeroDocumento());
+        entity.setEmail(bean.getEmail());
+        entity.setFechaNacimiento(bean.getFechaNacimiento());
+        entity.setTipoDocumento(bean.getTipoDocumento());
+        entity.setTelefono(bean.getTelefono());
+
         return entity;
     }
 }

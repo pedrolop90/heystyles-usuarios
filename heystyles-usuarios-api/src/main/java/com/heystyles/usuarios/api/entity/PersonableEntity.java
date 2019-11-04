@@ -62,6 +62,16 @@ public abstract class PersonableEntity extends AuditableEntity<Long> implements 
         this.id = id;
     }
 
+    @Override
+    public Long getIdPersona() {
+        return persona.getId();
+    }
+
+    @Override
+    public void setIdPersona(Long idPersona) {
+        persona.setId(idPersona);
+    }
+
     public PersonaEntity getPersona() {
         return persona;
     }

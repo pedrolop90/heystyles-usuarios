@@ -6,6 +6,7 @@ import com.heystyles.usuarios.core.domain.Persona;
 public class PersonableEntityToPersonaConverter<T extends Personable, D extends Persona> {
 
     public void convertPersona(T entity, D bean) {
+        bean.setIdPersona(entity.getIdPersona());
         bean.setNombres(entity.getNombres());
         bean.setApellidos(entity.getApellidos());
         bean.setNumeroDocumento(entity.getNumeroDocumento());

@@ -6,6 +6,10 @@ import java.time.LocalDate;
 
 public interface Personable {
 
+    Long getIdPersona();
+
+    void setIdPersona(Long id);
+
     String getNombres();
 
     void setNombres(String nombres);
