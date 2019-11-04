@@ -45,8 +45,9 @@ public class CargoServiceImpl
         Long id = super.insert(request.getCargo());
         Optional.ofNullable(createRol(request))
                 .ifPresent(s -> {
-                    request.getCargo().setId(id);
-                    update(request.getCargo());
+                    CargoEntity cargoEntity = cargoDao.findOne(id);
+                    cargoEntity.setIdSecurity(s);
+                    cargoDao.save(cargoEntity);
                 });
         return id;
     }
