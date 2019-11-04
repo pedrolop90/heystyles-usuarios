@@ -2,6 +2,7 @@ package com.heystyles.usuarios.core.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.heystyles.common.types.DomainBean;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
 
@@ -10,14 +11,15 @@ public class CuentaBanco extends DomainBean<Long> {
 
     private Long id;
 
-    @NotNull
     private Long proveedorId;
 
+    @NotBlank
     private String nombreBanco;
 
+    @NotNull
     private TipoCuentaBanco tipoCuenta;
 
-    @NotNull
+    @NotBlank
     private String numeroCuenta;
 
     @Override
