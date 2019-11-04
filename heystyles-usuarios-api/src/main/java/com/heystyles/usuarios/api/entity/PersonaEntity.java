@@ -38,7 +38,7 @@ public class PersonaEntity extends AuditableEntity<Long> implements Personable {
     @Column(name = "apellidos", nullable = false)
     private String apellidos;
 
-    @Formula(value = "CONCAT(nombres, ' ', apellido)")
+    @Formula(value = "CONCAT(nombres, ' ', apellidos)")
     private String nombreCompleto;
 
     @Column(name = "numero_documento", nullable = false)

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CuentaBancoService extends Service<CuentaBanco, Long> {
 
-    void uppsert(Long proveedorId, List<CuentaBanco> cuentasBanco);
+    void upsert(Long proveedorId, List<CuentaBanco> cuentasBanco);
 
     List<CuentaBanco> findByProveedoId(Long proveedorId);
 

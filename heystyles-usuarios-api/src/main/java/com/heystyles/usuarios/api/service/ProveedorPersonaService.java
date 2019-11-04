@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ProveedorPersonaService {
 
-    void uppsert(Long proveedorId, List<Persona> contactos);
+    void upsert(Long proveedorId, List<Persona> contactos);
 
     List<Persona> findContactosByProveedor(Long proveedorId);
 

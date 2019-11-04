@@ -29,7 +29,7 @@ public class ProveedorPersonaServiceImpl implements ProveedorPersonaService {
     private ConverterService converterService;
 
     @Override
-    public void uppsert(Long proveedorId, List<Persona> contactos) {
+    public void upsert(Long proveedorId, List<Persona> contactos) {
         if (contactos == null || contactos.size() == 0) {
             return;
         }

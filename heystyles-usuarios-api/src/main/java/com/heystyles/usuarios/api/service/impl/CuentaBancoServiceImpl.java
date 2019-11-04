@@ -25,7 +25,7 @@ public class CuentaBancoServiceImpl
 
     @Override
     //@Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void uppsert(Long proveedorId, List<CuentaBanco> cuentasBanco) {
+    public void upsert(Long proveedorId, List<CuentaBanco> cuentasBanco) {
         if (cuentasBanco != null) {
             cuentasBanco.forEach(cuentaBanco -> {
                 cuentaBanco.setProveedorId(proveedorId);
