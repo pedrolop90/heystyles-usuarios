@@ -49,7 +49,7 @@ public class CuentaBancoEntity extends com.heystyles.common.types.AuditableEntit
     private String numeroCuenta;
 
 
-    @Column(name = "d_delete", nullable = false)
+    @Column(name = "s_delete", nullable = false)
     private boolean delete;
 
     @CreatedDate
