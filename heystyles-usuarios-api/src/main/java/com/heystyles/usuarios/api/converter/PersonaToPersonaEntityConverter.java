@@ -28,6 +28,7 @@ public class PersonaToPersonaEntityConverter implements Converter<Persona, Perso
         PersonaEntity entity = null;
         if (bean.getId() == null) {
             entity = new PersonaEntity();
+            entity.setId(bean.getId());
         }
         else {
             entity = Optional.ofNullable(personaDao.getOne(bean.getId())).orElseThrow(() ->

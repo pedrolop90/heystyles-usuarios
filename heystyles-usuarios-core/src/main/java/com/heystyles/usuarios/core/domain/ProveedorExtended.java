@@ -1,15 +1,24 @@
 package com.heystyles.usuarios.core.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class ProveedorExtended extends Proveedor {
+public class ProveedorExtended {
+
+    @NotNull
+    private Proveedor proveedor;
 
     private List<Persona> contactos;
 
     private List<CuentaBanco> cuentasBanco;
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
+    }
 
     public List<Persona> getContactos() {
         return contactos;

@@ -7,6 +7,7 @@ import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -36,8 +37,10 @@ public class ProveedorPersonaEntity extends AuditableEntity<Long> implements Sof
     @JoinColumn(name = "id_proveedor", nullable = false)
     private ProveedorEntity proveedor;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_persona", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {
+            CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH
+    })
+    @JoinColumn(name = "id_persona")
     private PersonaEntity persona;
 
 

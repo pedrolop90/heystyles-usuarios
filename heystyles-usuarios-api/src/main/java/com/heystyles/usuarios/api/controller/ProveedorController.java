@@ -9,12 +9,11 @@ import com.heystyles.usuarios.api.service.ProveedorService;
 import com.heystyles.usuarios.core.domain.CuentaBanco;
 import com.heystyles.usuarios.core.domain.Persona;
 import com.heystyles.usuarios.core.domain.Proveedor;
-import com.heystyles.usuarios.core.domain.ProveedorExtended;
 import com.heystyles.usuarios.core.dto.CuentaBancoListResponse;
 import com.heystyles.usuarios.core.dto.PersonaListResponse;
 import com.heystyles.usuarios.core.dto.ProveedorExtendedResponse;
 import com.heystyles.usuarios.core.dto.ProveedorListResponse;
-import com.heystyles.usuarios.core.dto.ProveedorRequest;
+import com.heystyles.usuarios.core.domain.ProveedorExtended;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -57,7 +56,7 @@ public class ProveedorController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<IdResponse> insert(
-            @NotNull @Valid @RequestBody ProveedorRequest request) {
+            @NotNull @Valid @RequestBody ProveedorExtended request) {
         Long idPersona = proveedorService.insert(request);
         return Responses.responseEntity(new IdResponse(idPersona));
     }
@@ -68,7 +67,7 @@ public class ProveedorController {
             @ApiResponse(code = 404, message = "Proveedor no encontrado.")
     })
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> update(@NotNull @Valid @RequestBody ProveedorRequest request) {
+    public ResponseEntity<BaseResponse> update(@NotNull @Valid @RequestBody ProveedorExtended request) {
         proveedorService.update(request);
         return Responses.successEntity("Actualizacion correcta");
     }

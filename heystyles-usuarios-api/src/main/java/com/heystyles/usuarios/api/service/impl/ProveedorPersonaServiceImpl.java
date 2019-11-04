@@ -30,7 +30,7 @@ public class ProveedorPersonaServiceImpl implements ProveedorPersonaService {
 
     @Override
     public void upsert(Long proveedorId, List<Persona> contactos) {
-        if (contactos == null || contactos.size() == 0) {
+        if (contactos == null) {
             return;
         }
         List<ProveedorPersonaEntity> existing = proveedorPersonaDao.findByProveedorId(proveedorId);
@@ -44,21 +44,16 @@ public class ProveedorPersonaServiceImpl implements ProveedorPersonaService {
                 .map(e -> e.getPersona().getId())
                 .collect(Collectors.toSet());
 
-        Set<Long> newPersonasIds = contactos
-                .stream()
-                .map(Persona::getId)
-                .collect(Collectors.toSet());
-
         existing.stream()
-                .filter(p -> !newPersonasIds.contains(p.getPersona().getId()))
+                .filter(p -> !contactos.contains(p.getPersona()))
                 .forEach(p -> toDelete.add(p));
 
-        newPersonasIds.stream()
-                .filter(l -> !oldPersonasIds.contains(l))
+        contactos.stream()
+                .filter(l -> !oldPersonasIds.contains(l.getId()))
                 .forEach(l -> {
                     ProveedorPersonaEntity entity = new ProveedorPersonaEntity();
                     entity.setProveedor(proveedorEntity);
-                    entity.setPersona(new PersonaEntity(l));
+                    entity.setPersona(converterService.convertTo(l, PersonaEntity.class));
                     toSave.add(entity);
                 });
 

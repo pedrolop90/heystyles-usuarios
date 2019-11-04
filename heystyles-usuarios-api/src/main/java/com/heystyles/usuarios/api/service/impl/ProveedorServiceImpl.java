@@ -10,7 +10,6 @@ import com.heystyles.usuarios.api.service.ProveedorPersonaService;
 import com.heystyles.usuarios.api.service.ProveedorService;
 import com.heystyles.usuarios.core.domain.Proveedor;
 import com.heystyles.usuarios.core.domain.ProveedorExtended;
-import com.heystyles.usuarios.core.dto.ProveedorRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.data.repository.CrudRepository;
@@ -44,18 +43,18 @@ public class ProveedorServiceImpl extends ServiceImpl<Proveedor, ProveedorEntity
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public Long insert(ProveedorRequest request) {
+    public Long insert(ProveedorExtended request) {
         Long id = super.insert(request.getProveedor());
-        cuentaBancoService.upsert(id, request.getCuentasBancos());
+        cuentaBancoService.upsert(id, request.getCuentasBanco());
         proveedorPersonaService.upsert(id, request.getContactos());
         return id;
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void update(ProveedorRequest request) {
+    public void update(ProveedorExtended request) {
         update(request.getProveedor());
-        cuentaBancoService.upsert(request.getProveedor().getId(), request.getCuentasBancos());
+        cuentaBancoService.upsert(request.getProveedor().getId(), request.getCuentasBanco());
         proveedorPersonaService.upsert(request.getProveedor().getId(), request.getContactos());
     }
 

@@ -2,14 +2,19 @@ package com.heystyles.usuarios.api.service.impl;
 
 import com.heystyles.common.service.impl.ServiceImpl;
 import com.heystyles.usuarios.api.dao.CuentaBancoDao;
+import com.heystyles.usuarios.api.dao.ProveedorDao;
 import com.heystyles.usuarios.api.entity.CuentaBancoEntity;
+import com.heystyles.usuarios.api.entity.ProveedorEntity;
 import com.heystyles.usuarios.api.service.CuentaBancoService;
 import com.heystyles.usuarios.core.domain.CuentaBanco;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class CuentaBancoServiceImpl
@@ -17,6 +22,9 @@ public class CuentaBancoServiceImpl
 
     @Autowired
     private CuentaBancoDao cuentaBancoDao;
+
+    @Autowired
+    private ProveedorDao proveedorDao;
 
     @Override
     protected CrudRepository<CuentaBancoEntity, Long> getDao() {
@@ -26,17 +34,34 @@ public class CuentaBancoServiceImpl
     @Override
     //@Transactional(propagation = Propagation.REQUIRES_NEW)
     public void upsert(Long proveedorId, List<CuentaBanco> cuentasBanco) {
-        if (cuentasBanco != null) {
-            cuentasBanco.forEach(cuentaBanco -> {
-                cuentaBanco.setProveedorId(proveedorId);
-                if (cuentaBanco.getId() == null) {
-                    insert(cuentaBanco);
-                }
-                else {
-                    update(cuentaBanco);
-                }
-            });
+        if (cuentasBanco == null) {
+            return;
         }
+        List<CuentaBancoEntity> existing = cuentaBancoDao.findByProveedorId(proveedorId);
+
+        ProveedorEntity proveedorEntity = proveedorDao.findOne(proveedorId);
+        List<CuentaBancoEntity> toDelete = new ArrayList<>();
+        List<CuentaBancoEntity> toSave = new ArrayList<>();
+
+        Set<Long> oldPersonasIds = existing
+                .stream()
+                .map(e -> e.getId())
+                .collect(Collectors.toSet());
+
+        existing.stream()
+                .filter(p -> !cuentasBanco.contains(p.getId()))
+                .forEach(p -> toDelete.add(p));
+
+        cuentasBanco.stream()
+                .filter(l -> !oldPersonasIds.contains(l.getId()))
+                .forEach(l -> {
+                    CuentaBancoEntity entity = getConverterService().convertTo(l, CuentaBancoEntity.class);
+                    entity.setProveedor(proveedorEntity);
+                    toSave.add(entity);
+                });
+
+        cuentaBancoDao.delete(toDelete);
+        cuentaBancoDao.save(toSave);
     }
 
     @Override
