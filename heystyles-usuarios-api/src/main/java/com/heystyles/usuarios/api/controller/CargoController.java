@@ -7,7 +7,7 @@ import com.heystyles.usuarios.api.service.CargoService;
 import com.heystyles.usuarios.core.domain.Cargo;
 import com.heystyles.usuarios.core.dto.CargoExtendedResponse;
 import com.heystyles.usuarios.core.dto.CargoListResponse;
-import com.heystyles.usuarios.core.dto.CargoRequest;
+import com.heystyles.usuarios.core.dto.CargoExtended;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -44,7 +44,7 @@ public class CargoController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<IdResponse> insert(
-            @NotNull @Valid @RequestBody CargoRequest request) {
+            @NotNull @Valid @RequestBody CargoExtended request) {
         Long idCargo = cargoService.insert(request);
         return Responses.responseEntity(new IdResponse(idCargo));
     }
@@ -55,7 +55,7 @@ public class CargoController {
             @ApiResponse(code = 404, message = "Cargo no encontrado.")
     })
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> update(@NotNull @Valid @RequestBody CargoRequest request) {
+    public ResponseEntity<BaseResponse> update(@NotNull @Valid @RequestBody CargoExtended request) {
         cargoService.update(request);
         return Responses.successEntity("Actualizacion correcta");
     }

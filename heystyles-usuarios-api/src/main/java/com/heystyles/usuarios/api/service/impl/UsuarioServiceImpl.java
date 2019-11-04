@@ -45,7 +45,7 @@ public class UsuarioServiceImpl extends PersonableServiceImpl<Usuario, UsuarioEn
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Long insert(Usuario bean) {
         Long id = super.insert(bean);
-        Long rolId = cargoService.getCargo(bean.getCargoId()).getIdSecurity();
+        Long rolId = cargoService.getCargo(bean.getCargoId()).getCargo().getIdSecurity();
         registerUser(bean.getNumeroDocumento(), rolId);
         return id;
     }
@@ -75,7 +75,7 @@ public class UsuarioServiceImpl extends PersonableServiceImpl<Usuario, UsuarioEn
         Usuario usuario = getUsuario(usuarioId);
         super.delete(usuarioId);
         Optional.ofNullable(cargoService.getCargo(usuario.getCargoId()))
-                .map(cargo -> removeRolToUser(usuario.getNumeroDocumento(), cargo.getIdSecurity()))
+                .map(cargo -> removeRolToUser(usuario.getNumeroDocumento(), cargo.getCargo().getIdSecurity()))
                 .filter(estadoUser -> estadoUser.compareTo(EstadoUser.USER_ELIMINADO) == 0)
                 .ifPresent(estadoUser -> {
                     UsuarioEntity entity = getDao().findOne(usuarioId);

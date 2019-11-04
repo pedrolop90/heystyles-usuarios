@@ -5,7 +5,7 @@ import com.heystyles.usuarios.core.domain.Cargo;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-public class CargoRequest {
+public class CargoExtended {
 
     @NotNull
     private Cargo cargo;

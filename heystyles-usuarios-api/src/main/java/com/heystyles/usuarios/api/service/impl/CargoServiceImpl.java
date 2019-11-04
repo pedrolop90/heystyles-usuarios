@@ -8,8 +8,7 @@ import com.heystyles.usuarios.api.entity.CargoEntity;
 import com.heystyles.usuarios.api.message.MessageKeys;
 import com.heystyles.usuarios.api.service.CargoService;
 import com.heystyles.usuarios.core.domain.Cargo;
-import com.heystyles.usuarios.core.domain.CargoExtended;
-import com.heystyles.usuarios.core.dto.CargoRequest;
+import com.heystyles.usuarios.core.dto.CargoExtended;
 import domain.RolAuth0;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -42,7 +41,7 @@ public class CargoServiceImpl
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public Long insert(CargoRequest request) {
+    public Long insert(CargoExtended request) {
         Long id = super.insert(request.getCargo());
         Optional.ofNullable(createRol(request))
                 .ifPresent(s -> {
@@ -54,7 +53,7 @@ public class CargoServiceImpl
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void update(CargoRequest request) {
+    public void update(CargoExtended request) {
         update(request.getCargo());
         RolAuth0 rolAuth0 = new RolAuth0();
         rolAuth0.setNombre(request.getCargo().getNombre());
@@ -63,11 +62,11 @@ public class CargoServiceImpl
         rolClient.update(request.getCargo().getIdSecurity(), rolAuth0);
     }
 
-    private Long createRol(CargoRequest cargoRequest) {
+    private Long createRol(CargoExtended cargoExtended) {
         RolAuth0 rolAuth0 = new RolAuth0();
-        rolAuth0.setNombre(cargoRequest.getCargo().getNombre());
-        rolAuth0.setDescripcion(cargoRequest.getCargo().getNombre());
-        rolAuth0.setPermisos(cargoRequest.getPermisos());
+        rolAuth0.setNombre(cargoExtended.getCargo().getNombre());
+        rolAuth0.setDescripcion(cargoExtended.getCargo().getNombre());
+        rolAuth0.setPermisos(cargoExtended.getPermisos());
         return rolClient.create(rolAuth0);
     }
 

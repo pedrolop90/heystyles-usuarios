@@ -2,14 +2,13 @@ package com.heystyles.usuarios.api.service;
 
 import com.heystyles.common.service.Service;
 import com.heystyles.usuarios.core.domain.Cargo;
-import com.heystyles.usuarios.core.domain.CargoExtended;
-import com.heystyles.usuarios.core.dto.CargoRequest;
+import com.heystyles.usuarios.core.dto.CargoExtended;
 
 public interface CargoService extends Service<Cargo, Long> {
 
-    Long insert(CargoRequest request);
+    Long insert(CargoExtended request);
 
-    void update(CargoRequest request);
+    void update(CargoExtended request);
 
     CargoExtended getCargo(Long cargoId);
 }
