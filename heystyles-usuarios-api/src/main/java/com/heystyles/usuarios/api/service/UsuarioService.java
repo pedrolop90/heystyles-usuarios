@@ -6,4 +6,6 @@ public interface UsuarioService extends PersonableService<Usuario, Long> {
 
     Usuario getUsuario(Long usuarioId);
 
+    Usuario getUsuarioByNumeroDocumento(String numeroDocumento);
+
 }

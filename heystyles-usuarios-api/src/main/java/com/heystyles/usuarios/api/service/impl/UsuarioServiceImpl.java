@@ -94,4 +94,15 @@ public class UsuarioServiceImpl extends PersonableServiceImpl<Usuario, UsuarioEn
                                 MessageKeys.USUARIO_NOT_FOUND,
                                 new String[]{String.valueOf(usuarioId)}, getLocale())));
     }
+
+    @Override
+    public Usuario getUsuarioByNumeroDocumento(String numeroDocumento) {
+        return Optional.ofNullable(
+                getConverterService().convertTo(
+                        usuarioDao.findByPersonaNumeroDocumento(numeroDocumento), Usuario.class))
+                .orElseThrow(() -> APIExceptions.objetoNoEncontrado(
+                        messageSource.getMessage(
+                                MessageKeys.USUARIO_NUMERO_DOCUMENTO_NOT_FOUND,
+                                new String[]{String.valueOf(numeroDocumento)}, getLocale())));
+    }
 }

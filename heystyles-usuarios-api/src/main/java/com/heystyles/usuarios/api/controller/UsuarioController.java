@@ -93,4 +93,17 @@ public class UsuarioController {
         List<Usuario> usuarios = usuarioService.findAll();
         return Responses.responseEntity(new UsuarioListResponse(usuarios));
     }
+
+    @ApiOperation(value = "Permite Buscar un Usuario por numero de documento en la base de datos")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Usuario Encontrado."),
+            @ApiResponse(code = 404, message = "Usuario no encontrado.")
+    })
+    @GetMapping(value = "/numeroDocumento/{numeroDocumento}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UsuarioResponse> getUsuarioByNumeroDocumento(
+            @NotNull @PathVariable(name = "numeroDocumento") String numeroDocumento) {
+        Usuario usuario = usuarioService.getUsuarioByNumeroDocumento(numeroDocumento);
+        return Responses.responseEntity(new UsuarioResponse(usuario));
+    }
+
 }
