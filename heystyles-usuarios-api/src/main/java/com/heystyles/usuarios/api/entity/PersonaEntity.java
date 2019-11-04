@@ -21,7 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "PERSONA")
+@Table(name = "persona")
 public class PersonaEntity extends AuditableEntity<Long> implements Personable {
 
     public interface Attributes extends AuditableEntity.Attributes {
@@ -29,46 +29,46 @@ public class PersonaEntity extends AuditableEntity<Long> implements Personable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "NOMBRES", nullable = false)
+    @Column(name = "nombres", nullable = false)
     private String nombres;
 
-    @Column(name = "APELLIDOS", nullable = false)
+    @Column(name = "apellidos", nullable = false)
     private String apellidos;
 
-    @Formula(value = "CONCAT(NOMBRES, ' ', APELLIDOS)")
+    @Formula(value = "CONCAT(nombres, ' ', apellido)")
     private String nombreCompleto;
 
-    @Column(name = "NUMERO_DOCUMENTO", nullable = false)
+    @Column(name = "numero_documento", nullable = false)
     private String numeroDocumento;
 
-    @Column(name = "EMAIL", nullable = false)
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "ID_SECURITY")
+    @Column(name = "id_security")
     private Long idSecurity;
 
-    @Column(name = "FECHA_NACIMIENTO", nullable = false)
+    @Column(name = "fecha_nacimiento", nullable = false)
     @Convert(converter = LocalDateAttributeConverter.class)
     private LocalDate fechaNacimiento;
 
-    @Column(name = "TIPO_DOCUMENTO", nullable = false)
+    @Column(name = "tipo_documento", nullable = false)
     @Enumerated(value = EnumType.STRING)
     private TipoDocumento tipoDocumento;
 
     @CreatedDate
-    @Column(name = "CREATED_DATE")
+    @Column(name = "created_date")
     @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime createdDate;
 
     @LastModifiedDate
-    @Column(name = "UPDATED_DATE")
+    @Column(name = "updated_date")
     @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime updatedDate;
 
-    @Column(name = "TELEFONO")
+    @Column(name = "telefono")
     private String telefono;
 
     public PersonaEntity() {

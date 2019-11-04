@@ -11,18 +11,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "USUARIO")
-@Where(clause = "S_DELETE = 0")
+@Table(name = "usuario")
+@Where(clause = "s_delete = 0")
 public class UsuarioEntity extends PersonableEntity implements SoftDeletable {
 
     public interface Attributes extends PersonableEntity.Attributes {
     }
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "ID_CARGO", nullable = false)
+    @JoinColumn(name = "id_cargo", nullable = false)
     private CargoEntity cargo;
 
-    @Column(name = "S_DELETE", nullable = false)
+    @Column(name = "s_delete", nullable = false)
     private boolean delete;
 
     public CargoEntity getCargo() {

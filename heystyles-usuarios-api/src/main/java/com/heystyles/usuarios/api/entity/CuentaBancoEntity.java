@@ -22,8 +22,8 @@ import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "CUENTA_BANCO_ENTITY")
-@Where(clause = "S_DELETE = 0")
+@Table(name = "cuenta_banco")
+@Where(clause = "s_delete = 0")
 public class CuentaBancoEntity extends com.heystyles.common.types.AuditableEntity<Long> implements SoftDeletable {
 
     public interface Attributes extends com.heystyles.common.types.Entity.Attributes {
@@ -31,34 +31,34 @@ public class CuentaBancoEntity extends com.heystyles.common.types.AuditableEntit
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "ID_PROVEEDOR", nullable = false)
+    @JoinColumn(name = "id_proveedor", nullable = false)
     private ProveedorEntity proveedor;
 
-    @Column(name = "NOMBRE_BANCO", nullable = false)
+    @Column(name = "nombre_banco", nullable = false)
     private String nombreBanco;
 
-    @Column(name = "TIPO_CUENTA", nullable = false)
+    @Column(name = "tipo_cuenta", nullable = false)
     @Enumerated(value = EnumType.STRING)
     private TipoCuentaBanco tipoCuenta;
 
-    @Column(name = "NUMERO_CUENTA", nullable = false)
+    @Column(name = "numero_cuenta", nullable = false)
     private String numeroCuenta;
 
 
-    @Column(name = "S_DELETE", nullable = false)
+    @Column(name = "d_delete", nullable = false)
     private boolean delete;
 
     @CreatedDate
-    @Column(name = "CREATED_DATE")
+    @Column(name = "created_date")
     @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime createdDate;
 
     @LastModifiedDate
-    @Column(name = "UPDATED_DATE")
+    @Column(name = "updated_date")
     @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime updatedDate;
 

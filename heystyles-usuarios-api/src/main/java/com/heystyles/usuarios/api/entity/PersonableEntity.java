@@ -21,7 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
-@Where(clause = "S_DELETE = 0")
+@Where(clause = "s_delete = 0")
 public abstract class PersonableEntity extends AuditableEntity<Long> implements Personable {
 
     public interface Attributes extends AuditableEntity.Attributes {
@@ -29,7 +29,7 @@ public abstract class PersonableEntity extends AuditableEntity<Long> implements 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @OneToOne(fetch = FetchType.EAGER, optional = false,
@@ -39,16 +39,16 @@ public abstract class PersonableEntity extends AuditableEntity<Long> implements 
                     CascadeType.DETACH,
                     CascadeType.PERSIST
             })
-    @JoinColumn(name = "ID_PERSONA")
+    @JoinColumn(name = "id_persona")
     private PersonaEntity persona = new PersonaEntity();
 
     @CreatedDate
-    @Column(name = "CREATED_DATE")
+    @Column(name = "created_date")
     @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime createdDate;
 
     @LastModifiedDate
-    @Column(name = "UPDATED_DATE")
+    @Column(name = "updated_date")
     @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime updatedDate;
 

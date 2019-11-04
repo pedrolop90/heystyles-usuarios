@@ -17,8 +17,8 @@ import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "CARGO")
-@Where(clause = "S_DELETE = 0")
+@Table(name = "cargo")
+@Where(clause = "s_delete = 0")
 public class CargoEntity extends AuditableEntity<Long> implements SoftDeletable {
 
     public interface Attributes extends AuditableEntity.Attributes {
@@ -26,31 +26,31 @@ public class CargoEntity extends AuditableEntity<Long> implements SoftDeletable 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "NOMBRE", nullable = false)
+    @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Column(name = "NIVEL", nullable = false)
+    @Column(name = "nivel", nullable = false)
     private Long nivel;
 
-    @Column(name = "ID_SECURITY", nullable = false)
+    @Column(name = "id_security", nullable = false)
     private Long idSecurity;
 
-    @Column(name = "S_DELETE", nullable = false)
+    @Column(name = "s_delete", nullable = false)
     private boolean delete;
 
-    @Column(name = "FECHA_LIMITE_PAGO")
+    @Column(name = "fecha_limite_pago")
     private Long fechaLimitePago;
 
     @CreatedDate
-    @Column(name = "CREATED_DATE")
+    @Column(name = "created_date")
     @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime createdDate;
 
     @LastModifiedDate
-    @Column(name = "UPDATED_DATE")
+    @Column(name = "updated_date")
     @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime updatedDate;
 

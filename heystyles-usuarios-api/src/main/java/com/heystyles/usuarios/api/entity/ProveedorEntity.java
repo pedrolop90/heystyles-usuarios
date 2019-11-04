@@ -20,8 +20,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "PROVEEDOR")
-@Where(clause = "S_DELETE = 0")
+@Table(name = "proveedor")
+@Where(clause = "s_delete = 0")
 public class ProveedorEntity extends AuditableEntity<Long> implements SoftDeletable {
 
     public interface Attributes extends AuditableEntity.Attributes {
@@ -29,37 +29,37 @@ public class ProveedorEntity extends AuditableEntity<Long> implements SoftDeleta
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "NOMBRE", nullable = false)
+    @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Column(name = "DESCRIPCION", nullable = false)
+    @Column(name = "descripcion", nullable = false)
     private String descripcion;
 
-    @Column(name = "TELEFONO", nullable = false)
+    @Column(name = "telefono", nullable = false)
     private String telefono;
 
-    @Column(name = "DIRECCION")
+    @Column(name = "direccion")
     private String direccion;
 
-    @Column(name = "EMAIL", nullable = false)
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "S_DELETE", nullable = false)
+    @Column(name = "s_delete", nullable = false)
     private boolean delete;
 
-    @Column(name = "FECHA_LIMITE_PAGO")
+    @Column(name = "fecha_limite_pago")
     private Long fechaLimitePago;
 
     @CreatedDate
-    @Column(name = "CREATED_DATE")
+    @Column(name = "created_date")
     @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime createdDate;
 
     @LastModifiedDate
-    @Column(name = "UPDATED_DATE")
+    @Column(name = "updated_date")
     @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime updatedDate;
 
