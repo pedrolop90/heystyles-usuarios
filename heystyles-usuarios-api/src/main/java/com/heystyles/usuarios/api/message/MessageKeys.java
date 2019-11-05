@@ -23,4 +23,6 @@ public interface MessageKeys extends com.heystyles.common.util.MessageKeys {
     String CUENTA_BANCO_NOT_FOUND = "heystyles.usuarios.cuenta-banco.not-found";
 
     String USUARIO_NUMERO_DOCUMENTO_NOT_FOUND = "heystyles.usuarios.usuario-numero-document.not-found";
+
+    String PROVEEDOR_PERSONA_NOT_FOUND = "heystyles.usuarios.proveedor-persona.not-found";
 }

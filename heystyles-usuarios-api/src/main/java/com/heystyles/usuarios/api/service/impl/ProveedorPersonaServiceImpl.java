@@ -1,23 +1,33 @@
 package com.heystyles.usuarios.api.service.impl;
 
+import com.heystyles.common.exception.APIExceptions;
 import com.heystyles.common.service.ConverterService;
+import com.heystyles.common.service.impl.ServiceImpl;
 import com.heystyles.usuarios.api.dao.ProveedorDao;
 import com.heystyles.usuarios.api.dao.ProveedorPersonaDao;
 import com.heystyles.usuarios.api.entity.PersonaEntity;
 import com.heystyles.usuarios.api.entity.ProveedorEntity;
 import com.heystyles.usuarios.api.entity.ProveedorPersonaEntity;
+import com.heystyles.usuarios.api.message.MessageKeys;
 import com.heystyles.usuarios.api.service.ProveedorPersonaService;
 import com.heystyles.usuarios.core.domain.Persona;
+import com.heystyles.usuarios.core.domain.ProveedorPersona;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static org.springframework.context.i18n.LocaleContextHolder.getLocale;
+
 @Service
-public class ProveedorPersonaServiceImpl implements ProveedorPersonaService {
+public class ProveedorPersonaServiceImpl
+        extends ServiceImpl<ProveedorPersona, ProveedorPersonaEntity, Long> implements ProveedorPersonaService {
 
     @Autowired
     private ProveedorPersonaDao proveedorPersonaDao;
@@ -27,6 +37,14 @@ public class ProveedorPersonaServiceImpl implements ProveedorPersonaService {
 
     @Autowired
     private ConverterService converterService;
+
+    @Autowired
+    private MessageSource messageSource;
+
+    @Override
+    protected CrudRepository<ProveedorPersonaEntity, Long> getDao() {
+        return proveedorPersonaDao;
+    }
 
     @Override
     public void upsert(Long proveedorId, List<Persona> contactos) {
@@ -68,5 +86,14 @@ public class ProveedorPersonaServiceImpl implements ProveedorPersonaService {
                         .stream()
                         .map(ProveedorPersonaEntity::getPersona)
                         .collect(Collectors.toList()), Persona.class);
+    }
+
+    @Override
+    public ProveedorPersona getProveedorPersona(Long proveedorPersonaId) {
+        return Optional.ofNullable(findById(proveedorPersonaId))
+                .orElseThrow(() -> APIExceptions.objetoNoEncontrado(
+                        messageSource.getMessage(MessageKeys.PROVEEDOR_PERSONA_NOT_FOUND,
+                                                 new String[]{String.valueOf(proveedorPersonaId)},
+                                                 getLocale())));
     }
 }

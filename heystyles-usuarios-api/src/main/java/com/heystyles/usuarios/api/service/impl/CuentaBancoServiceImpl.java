@@ -1,20 +1,26 @@
 package com.heystyles.usuarios.api.service.impl;
 
+import com.heystyles.common.exception.APIExceptions;
 import com.heystyles.common.service.impl.ServiceImpl;
 import com.heystyles.usuarios.api.dao.CuentaBancoDao;
 import com.heystyles.usuarios.api.dao.ProveedorDao;
 import com.heystyles.usuarios.api.entity.CuentaBancoEntity;
 import com.heystyles.usuarios.api.entity.ProveedorEntity;
+import com.heystyles.usuarios.api.message.MessageKeys;
 import com.heystyles.usuarios.api.service.CuentaBancoService;
 import com.heystyles.usuarios.core.domain.CuentaBanco;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static org.springframework.context.i18n.LocaleContextHolder.getLocale;
 
 @Service
 public class CuentaBancoServiceImpl
@@ -25,6 +31,9 @@ public class CuentaBancoServiceImpl
 
     @Autowired
     private ProveedorDao proveedorDao;
+
+    @Autowired
+    private MessageSource messageSource;
 
     @Override
     protected CrudRepository<CuentaBancoEntity, Long> getDao() {
@@ -67,5 +76,13 @@ public class CuentaBancoServiceImpl
     @Override
     public List<CuentaBanco> findByProveedoId(Long proveedorId) {
         return getConverterService().convertTo(cuentaBancoDao.findByProveedorId(proveedorId), CuentaBanco.class);
+    }
+
+    @Override
+    public CuentaBanco getCuentaBanco(Long cuentaBancoId) {
+        return Optional.ofNullable(findById(cuentaBancoId))
+                .orElseThrow(() -> APIExceptions.objetoNoEncontrado(
+                        messageSource.getMessage(MessageKeys.CUENTA_BANCO_NOT_FOUND,
+                                                 new String[]{String.valueOf(cuentaBancoId)}, getLocale())));
     }
 }

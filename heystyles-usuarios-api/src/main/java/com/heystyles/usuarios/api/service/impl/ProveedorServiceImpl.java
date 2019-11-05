@@ -51,14 +51,6 @@ public class ProveedorServiceImpl extends ServiceImpl<Proveedor, ProveedorEntity
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void update(ProveedorExtended request) {
-        update(request.getProveedor());
-        cuentaBancoService.upsert(request.getProveedor().getId(), request.getCuentasBanco());
-        proveedorPersonaService.upsert(request.getProveedor().getId(), request.getContactos());
-    }
-
-    @Override
     public ProveedorExtended getProveedor(Long proveedorId) {
         ProveedorEntity proveedorEntity = Optional.ofNullable(proveedorDao.findOne(proveedorId))
                 .orElseThrow(() -> APIExceptions.objetoNoEncontrado(

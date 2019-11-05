@@ -11,4 +11,6 @@ public interface CuentaBancoService extends Service<CuentaBanco, Long> {
 
     List<CuentaBanco> findByProveedoId(Long proveedorId);
 
+    CuentaBanco getCuentaBanco(Long cuentaBancoId);
+
 }
