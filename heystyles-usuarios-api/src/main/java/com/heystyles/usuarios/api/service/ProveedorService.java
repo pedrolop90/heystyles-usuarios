@@ -8,6 +8,8 @@ public interface ProveedorService extends Service<Proveedor, Long> {
 
     Long insert(ProveedorExtended request);
 
+    void update(ProveedorExtended request);
+
     ProveedorExtended getProveedor(Long proveedorId);
 
 }
