@@ -56,11 +56,12 @@ public class CargoServiceImpl
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void update(CargoExtended request) {
         update(request.getCargo());
+        CargoEntity cargoEntity = cargoDao.findOne(request.getCargo().getId());
         RolAuth0 rolAuth0 = new RolAuth0();
         rolAuth0.setNombre(request.getCargo().getNombre());
         rolAuth0.setDescripcion(request.getCargo().getNombre());
         rolAuth0.setPermisos(request.getPermisos());
-        rolClient.update(request.getCargo().getIdSecurity(), rolAuth0);
+        rolClient.update(cargoEntity.getIdSecurity(), rolAuth0);
     }
 
     private Long createRol(CargoExtended cargoExtended) {

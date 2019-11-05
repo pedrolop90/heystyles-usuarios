@@ -36,7 +36,7 @@ public class CargoToCargoEntityConverter implements Converter<Cargo, CargoEntity
         }
         entity.setNombre(bean.getNombre());
         entity.setNivel(bean.getNivel());
-        entity.setIdSecurity(bean.getIdSecurity());
+        //entity.setIdSecurity(bean.getIdSecurity());
         return entity;
     }
 }
