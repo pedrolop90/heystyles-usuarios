@@ -1,30 +1,36 @@
 package com.heystyles.usuarios.api.entity;
 
 import com.heystyles.common.persistence.LocalDateTimeAttributeConverter;
-import com.heystyles.common.types.AuditableEntity;
+import com.heystyles.common.types.AuditableWithAuthorEntity;
 import com.heystyles.common.types.SoftDeletable;
 import org.hibernate.annotations.Where;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table(name = "proveedor")
+@EntityListeners(AuditingEntityListener.class)
 @Where(clause = "s_delete = 0")
-public class ProveedorEntity extends AuditableEntity<Long> implements SoftDeletable {
+public class ProveedorEntity extends AuditableWithAuthorEntity<Long> implements SoftDeletable {
 
-    public interface Attributes extends AuditableEntity.Attributes {
+    public interface Attributes extends AuditableWithAuthorEntity.Attributes {
     }
 
     @Id
@@ -53,15 +59,25 @@ public class ProveedorEntity extends AuditableEntity<Long> implements SoftDeleta
     @Column(name = "fecha_limite_pago")
     private Long fechaLimitePago;
 
+    @NotNull
     @CreatedDate
     @Column(name = "created_date")
     @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime createdDate;
 
+    @NotNull
+    @CreatedBy
+    @Column(name = "created_by")
+    private String createdBy;
+
     @LastModifiedDate
     @Column(name = "updated_date")
     @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime updatedDate;
+
+    @LastModifiedBy
+    @Column(name = "updated_by")
+    private String updatedBy;
 
     @OneToMany(mappedBy = "proveedor", fetch = FetchType.LAZY)
     private List<ProveedorPersonaEntity> contactos;
@@ -146,6 +162,16 @@ public class ProveedorEntity extends AuditableEntity<Long> implements SoftDeleta
     }
 
     @Override
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    @Override
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    @Override
     public LocalDateTime getUpdatedDate() {
         return updatedDate;
     }
@@ -153,6 +179,16 @@ public class ProveedorEntity extends AuditableEntity<Long> implements SoftDeleta
     @Override
     public void setUpdatedDate(LocalDateTime updatedDate) {
         this.updatedDate = updatedDate;
+    }
+
+    @Override
+    public String getUpdatedBy() {
+        return updatedBy;
+    }
+
+    @Override
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     @Override

@@ -1,15 +1,19 @@
 package com.heystyles.usuarios.api.entity;
 
 import com.heystyles.common.persistence.LocalDateTimeAttributeConverter;
-import com.heystyles.common.types.AuditableEntity;
+import com.heystyles.common.types.AuditableWithAuthorEntity;
 import com.heystyles.usuarios.core.domain.TipoDocumento;
 import org.hibernate.annotations.Where;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,10 +25,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
 @Where(clause = "s_delete = 0")
-public abstract class PersonableEntity extends AuditableEntity<Long> implements Personable {
+public abstract class PersonableEntity extends AuditableWithAuthorEntity<Long> implements Personable {
 
-    public interface Attributes extends AuditableEntity.Attributes {
+    public interface Attributes extends AuditableWithAuthorEntity.Attributes {
     }
 
     @Id
@@ -47,10 +52,18 @@ public abstract class PersonableEntity extends AuditableEntity<Long> implements 
     @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime createdDate;
 
+    @CreatedBy
+    @Column(name = "created_by")
+    private String createdBy;
+
     @LastModifiedDate
     @Column(name = "updated_date")
     @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime updatedDate;
+
+    @LastModifiedBy
+    @Column(name = "updated_by")
+    private String updatedBy;
 
     @Override
     public Long getId() {
@@ -178,6 +191,26 @@ public abstract class PersonableEntity extends AuditableEntity<Long> implements 
     @Override
     public void setUpdatedDate(LocalDateTime updatedDate) {
         this.updatedDate = updatedDate;
+    }
+
+    @Override
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    @Override
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    @Override
+    public String getUpdatedBy() {
+        return updatedBy;
+    }
+
+    @Override
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     @Override
