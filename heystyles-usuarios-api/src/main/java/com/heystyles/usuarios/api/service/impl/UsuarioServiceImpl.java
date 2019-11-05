@@ -6,7 +6,6 @@ import com.heystyles.usuarios.api.dao.UsuarioDao;
 import com.heystyles.usuarios.api.entity.CargoEntity;
 import com.heystyles.usuarios.api.entity.UsuarioEntity;
 import com.heystyles.usuarios.api.message.MessageKeys;
-import com.heystyles.usuarios.api.service.CargoService;
 import com.heystyles.usuarios.api.service.UsuarioService;
 import com.heystyles.usuarios.core.domain.Usuario;
 import domain.EstadoUser;
@@ -28,9 +27,6 @@ public class UsuarioServiceImpl extends PersonableServiceImpl<Usuario, UsuarioEn
     private UsuarioDao usuarioDao;
 
     @Autowired
-    private CargoService cargoService;
-
-    @Autowired
     private CargoDao cargoDao;
 
     @Autowired
@@ -45,7 +41,7 @@ public class UsuarioServiceImpl extends PersonableServiceImpl<Usuario, UsuarioEn
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Long insert(Usuario bean) {
         Long id = super.insert(bean);
-        Long rolId = cargoService.getCargo(bean.getCargoId()).getCargo().getIdSecurity();
+        Long rolId = cargoDao.findOne(bean.getCargoId()).getIdSecurity();
         registerUser(bean.getNumeroDocumento(), rolId);
         return id;
     }
@@ -74,8 +70,8 @@ public class UsuarioServiceImpl extends PersonableServiceImpl<Usuario, UsuarioEn
     public void delete(Long usuarioId) {
         Usuario usuario = getUsuario(usuarioId);
         super.delete(usuarioId);
-        Optional.ofNullable(cargoService.getCargo(usuario.getCargoId()))
-                .map(cargo -> removeRolToUser(usuario.getNumeroDocumento(), cargo.getCargo().getIdSecurity()))
+        Optional.ofNullable(cargoDao.findOne(usuario.getCargoId()))
+                .map(cargo -> removeRolToUser(usuario.getNumeroDocumento(), cargo.getIdSecurity()))
                 .filter(estadoUser -> estadoUser.compareTo(EstadoUser.USER_ELIMINADO) == 0)
                 .ifPresent(estadoUser -> {
                     UsuarioEntity entity = getDao().findOne(usuarioId);
