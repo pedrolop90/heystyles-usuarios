@@ -18,7 +18,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
@@ -50,7 +49,6 @@ public class CargoEntity extends AuditableWithAuthorEntity<Long> implements Soft
     @Column(name = "fecha_limite_pago")
     private Long fechaLimitePago;
 
-    @NotNull
     @CreatedDate
     @Column(name = "created_date")
     @Convert(converter = LocalDateTimeAttributeConverter.class)

@@ -22,7 +22,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
@@ -53,7 +52,6 @@ public class ProveedorPersonaEntity extends AuditableWithAuthorEntity<Long> impl
     @Column(name = "s_delete", nullable = false)
     private boolean delete;
 
-    @NotNull
     @CreatedDate
     @Column(name = "created_date")
     @Convert(converter = LocalDateTimeAttributeConverter.class)

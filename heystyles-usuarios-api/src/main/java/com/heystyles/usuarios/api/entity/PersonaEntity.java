@@ -21,7 +21,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -64,8 +63,6 @@ public class PersonaEntity extends AuditableWithAuthorEntity<Long> implements Pe
     @Enumerated(value = EnumType.STRING)
     private TipoDocumento tipoDocumento;
 
-
-    @NotNull
     @CreatedDate
     @Column(name = "created_date")
     @Convert(converter = LocalDateTimeAttributeConverter.class)

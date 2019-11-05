@@ -20,7 +20,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -59,13 +58,11 @@ public class ProveedorEntity extends AuditableWithAuthorEntity<Long> implements 
     @Column(name = "fecha_limite_pago")
     private Long fechaLimitePago;
 
-    @NotNull
     @CreatedDate
     @Column(name = "created_date")
     @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime createdDate;
 
-    @NotNull
     @CreatedBy
     @Column(name = "created_by")
     private String createdBy;
