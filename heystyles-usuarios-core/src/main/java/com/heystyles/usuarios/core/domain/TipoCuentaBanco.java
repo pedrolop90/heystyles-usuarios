@@ -8,7 +8,7 @@ import com.heystyles.common.exception.InvalidEnumValueException;
 @JsonFormat(shape = JsonFormat.Shape.STRING)
 public enum TipoCuentaBanco {
 
-    CA, CC;
+    CA, CC, C;
 
     @JsonValue
     public String getValue() {
