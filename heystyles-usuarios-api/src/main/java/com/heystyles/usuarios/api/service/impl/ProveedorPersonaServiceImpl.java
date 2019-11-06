@@ -69,7 +69,7 @@ public class ProveedorPersonaServiceImpl
                 .collect(Collectors.toSet());
 
         existing.stream()
-                .filter(p -> !contactosRequest.contains(p.getPersona()))
+                .filter(p -> !contactosRequest.contains(p.getPersona().getId()))
                 .forEach(p -> toDelete.add(p));
 
         contactos.stream()
