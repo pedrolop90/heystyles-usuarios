@@ -77,9 +77,11 @@ public class ProveedorEntity extends AuditableWithAuthorEntity<Long> implements 
     private String updatedBy;
 
     @OneToMany(mappedBy = "proveedor", fetch = FetchType.LAZY)
+    @Where(clause = "s_delete = 0")
     private List<ProveedorPersonaEntity> contactos;
 
     @OneToMany(mappedBy = "proveedor", fetch = FetchType.LAZY)
+    @Where(clause = "s_delete = 0")
     private List<CuentaBancoEntity> cuentasBanco;
 
     @Override
