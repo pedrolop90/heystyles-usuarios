@@ -52,13 +52,18 @@ public class CuentaBancoServiceImpl
         List<CuentaBancoEntity> toDelete = new ArrayList<>();
         List<CuentaBancoEntity> toSave = new ArrayList<>();
 
+        Set<Long> cuentasBancoRequest =  cuentasBanco
+                .stream()
+                .map(e -> e.getId())
+                .collect(Collectors.toSet());
+
         Set<Long> oldPersonasIds = existing
                 .stream()
                 .map(e -> e.getId())
                 .collect(Collectors.toSet());
 
         existing.stream()
-                .filter(p -> !cuentasBanco.contains(p.getId()))
+                .filter(p -> !cuentasBancoRequest.contains(p.getId()))
                 .forEach(p -> toDelete.add(p));
 
         cuentasBanco.stream()

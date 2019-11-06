@@ -57,13 +57,19 @@ public class ProveedorPersonaServiceImpl
         List<ProveedorPersonaEntity> toDelete = new ArrayList<>();
         List<ProveedorPersonaEntity> toSave = new ArrayList<>();
 
+
+        Set<Long> contactosRequest =  contactos
+                .stream()
+                .map(e -> e.getId())
+                .collect(Collectors.toSet());
+
         Set<Long> oldPersonasIds = existing
                 .stream()
                 .map(e -> e.getPersona().getId())
                 .collect(Collectors.toSet());
 
         existing.stream()
-                .filter(p -> !contactos.contains(p.getPersona()))
+                .filter(p -> !contactosRequest.contains(p.getPersona()))
                 .forEach(p -> toDelete.add(p));
 
         contactos.stream()

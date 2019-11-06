@@ -63,4 +63,14 @@ public class CuentaBanco extends DomainBean<Long> {
     public void setNumeroCuenta(String numeroCuenta) {
         this.numeroCuenta = numeroCuenta;
     }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        CuentaBanco cuentaBanco = (CuentaBanco) obj;
+        if(cuentaBanco.getId() == this.id){
+            return true;
+        }
+        return false;
+    }
 }
