@@ -15,12 +15,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+/*
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = {"com.heystyles.usuarios.api.dao"})
-
+*/
 public class JpaConfig {
-
+/*
     private static final String PU_NAME = "heystyles-usurios-pu";
 
     @Primary
@@ -39,5 +40,5 @@ public class JpaConfig {
     public PlatformTransactionManager transactionManager(@Qualifier("entityManagerFactory") EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
-
+*/
 }
