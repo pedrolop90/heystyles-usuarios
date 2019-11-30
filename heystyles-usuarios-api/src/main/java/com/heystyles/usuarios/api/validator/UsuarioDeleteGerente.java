@@ -3,7 +3,6 @@ package com.heystyles.usuarios.api.validator;
 import com.heystyles.common.validation.ValidationError;
 import com.heystyles.common.validation.Validator;
 import com.heystyles.usuarios.api.dao.CargoDao;
-import com.heystyles.usuarios.api.dao.UsuarioDao;
 import com.heystyles.usuarios.api.entity.CargoEntity;
 import com.heystyles.usuarios.api.message.MessageKeys;
 import com.heystyles.usuarios.core.domain.Usuario;
