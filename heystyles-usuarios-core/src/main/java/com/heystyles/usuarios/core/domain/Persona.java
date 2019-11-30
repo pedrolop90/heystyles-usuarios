@@ -37,6 +37,8 @@ public class Persona extends DomainBean<Long> {
 
     private String telefono;
 
+    private Long fotografiaId;
+
     @Override
     public Long getId() {
         return idPersona;
@@ -109,5 +111,13 @@ public class Persona extends DomainBean<Long> {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public Long getFotografiaId() {
+        return fotografiaId;
+    }
+
+    public void setFotografiaId(Long fotografiaId) {
+        this.fotografiaId = fotografiaId;
     }
 }

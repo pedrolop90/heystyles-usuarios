@@ -3,6 +3,8 @@ package com.heystyles.usuarios.api.controller;
 import com.heystyles.common.response.Responses;
 import com.heystyles.common.types.BaseResponse;
 import com.heystyles.common.types.IdResponse;
+import com.heystyles.file.core.domain.File;
+import com.heystyles.file.core.dto.FileResponse;
 import com.heystyles.usuarios.api.service.PersonaService;
 import com.heystyles.usuarios.core.domain.Persona;
 import com.heystyles.usuarios.core.dto.PersonaListResponse;
@@ -97,7 +99,7 @@ public class PersonaController {
 
     @ApiOperation(value = "Permite Listar todas las Persona de la base de datos")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Persoans Encontradas."),
+            @ApiResponse(code = 200, message = "Personas Encontradas."),
             @ApiResponse(code = 404, message = "Personas no encontradas.")
     })
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -106,4 +108,14 @@ public class PersonaController {
         return Responses.responseEntity(new PersonaListResponse(personas));
     }
 
+    @ApiOperation(value = "Permite Obtener la Fotografia de una persona, dado su numero de documento de la base de datos")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Fotografia Encontrada."),
+            @ApiResponse(code = 404, message = "Fotografia no encontrada.")
+    })
+    @GetMapping(value = "/{numeroDocumento}/fotografia", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<FileResponse> getPersonas(@NotNull @PathVariable String numeroDocumento) {
+        File fotografia = personaService.getFotografia(numeroDocumento);
+        return Responses.responseEntity(new FileResponse(fotografia));
+    }
 }

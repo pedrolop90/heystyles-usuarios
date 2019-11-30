@@ -50,8 +50,8 @@ public class UsuarioToUsuarioEntityConverter implements Converter<Usuario, Usuar
             entity = Optional.ofNullable(usuarioDao.findOne(bean.getId()))
                     .orElseThrow(() -> APIExceptions.objetoNoEncontrado(
                             messageSource.getMessage(MessageKeys.USUARIO_NOT_FOUND,
-                                                     new String[]{String.valueOf(bean.getId())},
-                                                     getLocale())));
+                                    new String[]{String.valueOf(bean.getId())},
+                                    getLocale())));
         }
         CargoEntity cargoEntity = Optional.ofNullable(cargoDao.findOne(bean.getCargoId()))
                 .orElseThrow(() -> APIExceptions.objetoNoEncontrado(messageSource.getMessage(
@@ -65,6 +65,9 @@ public class UsuarioToUsuarioEntityConverter implements Converter<Usuario, Usuar
         entity.setFechaNacimiento(bean.getFechaNacimiento());
         entity.setTipoDocumento(bean.getTipoDocumento());
         entity.setTelefono(bean.getTelefono());
+        if (bean.getFotografiaId() != null) {
+            entity.setFotografiaId(bean.getFotografiaId());
+        }
 
         return entity;
     }

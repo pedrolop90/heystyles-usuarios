@@ -42,6 +42,9 @@ public class PersonaToPersonaEntityConverter implements Converter<Persona, Perso
         entity.setFechaNacimiento(bean.getFechaNacimiento());
         entity.setTipoDocumento(bean.getTipoDocumento());
         entity.setTelefono(bean.getTelefono());
+        if (bean.getFotografiaId() != null) {
+            entity.setFotografiaId(bean.getFotografiaId());
+        }
 
         return entity;
     }

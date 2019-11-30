@@ -1,6 +1,8 @@
 package com.heystyles.usuarios.api.service.impl;
 
 import com.heystyles.common.exception.APIExceptions;
+import com.heystyles.file.cliente.FileClient;
+import com.heystyles.file.core.domain.File;
 import com.heystyles.usuarios.api.dao.PersonaDao;
 import com.heystyles.usuarios.api.entity.PersonaEntity;
 import com.heystyles.usuarios.api.message.MessageKeys;
@@ -21,6 +23,9 @@ public class PersonaServiceImpl
 
     @Autowired
     private PersonaDao personaDao;
+
+    @Autowired
+    private FileClient fileClient;
 
     @Autowired
     private MessageSource messageSource;
@@ -44,6 +49,15 @@ public class PersonaServiceImpl
         PersonaEntity personaEntity = personaDao.findByNumeroDocumento(numeroDocumento);
         if (personaEntity != null) {
             return getConverterService().convertTo(personaEntity, Persona.class);
+        }
+        return null;
+    }
+
+    @Override
+    public File getFotografia(String numeroDocumento) {
+        PersonaEntity personaEntity = personaDao.findByNumeroDocumento(numeroDocumento);
+        if (personaEntity != null) {
+            return fileClient.getFile(personaEntity.getFotografiaId());
         }
         return null;
     }

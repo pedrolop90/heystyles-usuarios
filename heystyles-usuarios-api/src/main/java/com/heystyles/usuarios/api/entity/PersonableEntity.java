@@ -222,4 +222,14 @@ public abstract class PersonableEntity extends AuditableWithAuthorEntity<Long> i
     public void setTelefono(String telefono) {
         persona.setTelefono(telefono);
     }
+
+    @Override
+    public Long getFotografiaId() {
+        return persona.getFotografiaId();
+    }
+
+    @Override
+    public void setFotografiaId(Long fotografiaId) {
+        persona.setFotografiaId(fotografiaId);
+    }
 }

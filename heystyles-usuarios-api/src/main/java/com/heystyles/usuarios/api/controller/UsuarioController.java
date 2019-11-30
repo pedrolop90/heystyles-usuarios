@@ -5,7 +5,10 @@ import com.heystyles.common.types.BaseResponse;
 import com.heystyles.common.types.IdResponse;
 import com.heystyles.usuarios.api.service.UsuarioService;
 import com.heystyles.usuarios.core.domain.Usuario;
+import com.heystyles.usuarios.core.domain.UsuarioExtended;
+import com.heystyles.usuarios.core.dto.UsuarioExtendedResponse;
 import com.heystyles.usuarios.core.dto.UsuarioListResponse;
+import com.heystyles.usuarios.core.dto.UsuarioRequest;
 import com.heystyles.usuarios.core.dto.UsuarioResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,7 +39,7 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-    @ApiOperation(value = "Permite Crear un Usuario en la base de datos.")
+    @ApiOperation(value = "Permite Registrar un Usuario en la base de datos.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Usuario Creado.")
     })
@@ -48,14 +51,38 @@ public class UsuarioController {
         return Responses.responseEntity(new IdResponse(idUsuario));
     }
 
+    @ApiOperation(value = "Permite Registrar un Usuario, con fotografia en la base de datos.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Usuario Creado.")
+    })
+    @PostMapping(value = "/extended", consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<IdResponse> insertExtended(
+            @NotNull @Valid @RequestBody UsuarioRequest request) {
+        Long idUsuario = usuarioService.insert(request);
+        return Responses.responseEntity(new IdResponse(idUsuario));
+    }
+
     @ApiOperation(value = "Permite actualizar un Usuario en la base de datos")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Usuario Actualizado."),
             @ApiResponse(code = 404, message = "Usuario no encontrado.")
     })
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/extended",
+            consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> update(@NotNull @Valid @RequestBody Usuario usuario) {
         usuarioService.update(usuario);
+        return Responses.successEntity("Actualizacion correcta");
+    }
+
+    @ApiOperation(value = "Permite actualizar un Usuario con fotografia en la base de datos")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Usuario Actualizado."),
+            @ApiResponse(code = 404, message = "Usuario no encontrado.")
+    })
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BaseResponse> updateExtended(@NotNull @Valid @RequestBody UsuarioRequest request) {
+        usuarioService.update(request);
         return Responses.successEntity("Actualizacion correcta");
     }
 
@@ -81,6 +108,18 @@ public class UsuarioController {
             @NotNull @PathVariable(name = "usuarioId") Long usuarioId) {
         Usuario usuario = usuarioService.getUsuario(usuarioId);
         return Responses.responseEntity(new UsuarioResponse(usuario));
+    }
+
+    @ApiOperation(value = "Permite Buscar un Usuario con Fotografia en la base de datos")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Usuario Encontrado."),
+            @ApiResponse(code = 404, message = "Usuario no encontrado.")
+    })
+    @GetMapping(value = "/{usuarioId}/extended", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UsuarioExtendedResponse> getUsuarioExtended(
+            @NotNull @PathVariable(name = "usuarioId") Long usuarioId) {
+        UsuarioExtended usuario = usuarioService.getUsuarioExtended(usuarioId);
+        return Responses.responseEntity(new UsuarioExtendedResponse(usuario));
     }
 
     @ApiOperation(value = "Permite Listar todos los Usuarios de la base de datos")

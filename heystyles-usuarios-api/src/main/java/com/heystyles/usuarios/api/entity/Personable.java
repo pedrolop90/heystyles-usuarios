@@ -45,4 +45,8 @@ public interface Personable {
     String getTelefono();
 
     void setTelefono(String telefono);
+
+    Long getFotografiaId();
+
+    void setFotografiaId(Long fotografiaId);
 }

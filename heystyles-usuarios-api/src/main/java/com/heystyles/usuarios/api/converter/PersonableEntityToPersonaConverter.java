@@ -14,6 +14,7 @@ public class PersonableEntityToPersonaConverter<T extends Personable, D extends 
         bean.setEmail(entity.getEmail());
         bean.setTipoDocumento(entity.getTipoDocumento());
         bean.setTelefono(entity.getTelefono());
+        bean.setFotografiaId(entity.getFotografiaId());
     }
 
 }
