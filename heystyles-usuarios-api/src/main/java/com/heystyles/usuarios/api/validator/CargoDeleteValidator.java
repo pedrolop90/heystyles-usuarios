@@ -17,7 +17,7 @@ import java.util.List;
 import static org.springframework.context.i18n.LocaleContextHolder.getLocale;
 
 @Component
-public class CargoDelteValidator implements Validator<Cargo> {
+public class CargoDeleteValidator implements Validator<Cargo> {
 
     @Autowired
     private UsuarioDao usuarioDao;

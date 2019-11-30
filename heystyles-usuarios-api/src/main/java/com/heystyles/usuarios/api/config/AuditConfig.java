@@ -12,9 +12,11 @@ import java.util.Optional;
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
 public class AuditConfig {
 
+    public static final String USUARIO_DEFECTO = "system";
+
     @Bean
     public AuditorAware<String> auditorAware() {
-        return () -> Optional.ofNullable(HttpRequestContextHolder.getUsuario()).orElse("system");
+        return () -> Optional.ofNullable(HttpRequestContextHolder.getUsuario()).orElse(USUARIO_DEFECTO);
     }
 
 }
