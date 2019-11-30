@@ -14,6 +14,9 @@ public class ClientProperties {
     @NotNull
     private String seguridadUrlBase;
 
+    @NotNull
+    private String fileUrlBase;
+
     private int connectionTimeout;
 
     private int readTimeout;
@@ -40,5 +43,13 @@ public class ClientProperties {
 
     public void setReadTimeout(int readTimeout) {
         this.readTimeout = readTimeout;
+    }
+
+    public String getFileUrlBase() {
+        return fileUrlBase;
+    }
+
+    public void setFileUrlBase(String fileUrlBase) {
+        this.fileUrlBase = fileUrlBase;
     }
 }

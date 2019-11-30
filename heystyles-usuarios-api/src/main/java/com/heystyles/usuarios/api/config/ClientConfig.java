@@ -1,6 +1,8 @@
 package com.heystyles.usuarios.api.config;
 
 import com.heystyles.common.response.ClientResponseErrorHandler;
+import com.heystyles.file.cliente.FileClient;
+import com.heystyles.file.cliente.impl.FileClientImpl;
 import com.heystyles.seguridad.cliente.RolClient;
 import com.heystyles.seguridad.cliente.UserCliente;
 import com.heystyles.seguridad.cliente.impl.RolClientImpl;
@@ -34,5 +36,10 @@ public class ClientConfig {
     @Bean
     public RolClient rolClient(RestTemplate restTemplate) {
         return new RolClientImpl(clientProperties.getSeguridadUrlBase(), restTemplate);
+    }
+
+    @Bean
+    public FileClient fileClient(RestTemplate restTemplate) {
+        return new FileClientImpl(clientProperties.getFileUrlBase(), restTemplate);
     }
 }
