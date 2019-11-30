@@ -1,9 +1,9 @@
 package com.heystyles.usuarios.cliente;
 
-import com.heystyles.usuarios.core.domain.Proveedor;
+import com.heystyles.usuarios.core.domain.ProveedorExtended;
 
 public interface ProveedorClient {
 
-    Proveedor findProveedorById(Long proveedorId);
+    ProveedorExtended findProveedorById(Long proveedorId);
 
 }
