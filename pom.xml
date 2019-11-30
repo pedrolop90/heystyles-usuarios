@@ -12,6 +12,7 @@
     <modules>
         <module>heystyles-usuarios-api</module>
         <module>heystyles-usuarios-core</module>
+        <module>usuarios-cliente</module>
     </modules>
 
     <parent>
