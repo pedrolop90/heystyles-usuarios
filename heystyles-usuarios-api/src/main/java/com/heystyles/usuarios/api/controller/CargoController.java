@@ -90,7 +90,7 @@ public class CargoController {
     })
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CargoListResponse> getCargos() {
-        List<Cargo> cargos = cargoService.findAll();
+        List<Cargo> cargos = cargoService.getCargos();
         return Responses.responseEntity(new CargoListResponse(cargos));
     }
 

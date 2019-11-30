@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.context.i18n.LocaleContextHolder.getLocale;
@@ -78,5 +79,11 @@ public class CargoServiceImpl
                 .orElseThrow(() -> APIExceptions.objetoNoEncontrado(messageSource.getMessage(
                         MessageKeys.CARGO_NOT_FOUND, new String[]{String.valueOf(cargoId)}, getLocale())));
         return getConverterService().convertTo(cargoEntity, CargoExtended.class);
+    }
+
+    @Override
+    public List<Cargo> getCargos() {
+        List<CargoEntity> cargoEntities = cargoDao.findByNivelGreaterThanEqual(1L);
+        return getConverterService().convertTo(cargoEntities, Cargo.class);
     }
 }

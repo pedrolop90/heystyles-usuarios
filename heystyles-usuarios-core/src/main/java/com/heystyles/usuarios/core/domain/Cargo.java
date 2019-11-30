@@ -12,7 +12,7 @@ public class Cargo extends DomainBean<Long> {
 
     @NotBlank
     private String nombre;
-    private Long nivel;
+    private Long nivel = 1L;
 
     private Long idSecurity;
 

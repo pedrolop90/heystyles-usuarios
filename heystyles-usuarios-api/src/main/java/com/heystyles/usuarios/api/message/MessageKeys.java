@@ -25,4 +25,6 @@ public interface MessageKeys extends com.heystyles.common.util.MessageKeys {
     String USUARIO_NUMERO_DOCUMENTO_NOT_FOUND = "heystyles.usuarios.usuario-numero-document.not-found";
 
     String PROVEEDOR_PERSONA_NOT_FOUND = "heystyles.usuarios.proveedor-persona.not-found";
+
+    String USUARIO_GERENTE_NOT_DELETE = "heystyles.usuarios.usuario-gerente.not-delete";
 }

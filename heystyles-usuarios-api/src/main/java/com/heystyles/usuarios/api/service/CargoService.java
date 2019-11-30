@@ -4,6 +4,8 @@ import com.heystyles.common.service.Service;
 import com.heystyles.usuarios.core.domain.Cargo;
 import com.heystyles.usuarios.core.dto.CargoExtended;
 
+import java.util.List;
+
 public interface CargoService extends Service<Cargo, Long> {
 
     Long insert(CargoExtended request);
@@ -11,4 +13,6 @@ public interface CargoService extends Service<Cargo, Long> {
     void update(CargoExtended request);
 
     CargoExtended getCargo(Long cargoId);
+
+    List<Cargo> getCargos();
 }

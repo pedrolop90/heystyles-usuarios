@@ -13,7 +13,7 @@ public class CargoEntityToCargoConverter implements Converter<CargoEntity, Cargo
         cargo.setId(entity.getId());
         cargo.setNombre(entity.getNombre());
         cargo.setNivel(entity.getNivel());
-        //cargo.setIdSecurity(entity.getIdSecurity());
+        cargo.setIdSecurity(entity.getIdSecurity());
         return cargo;
     }
 }
