@@ -30,6 +30,26 @@ import java.time.LocalDateTime;
 public class PersonaEntity extends AuditableWithAuthorEntity<Long> implements Personable {
 
     public interface Attributes extends AuditableWithAuthorEntity.Attributes {
+        String PERSONA = "persona";
+        String TIPO_IDENTIFICACION = "tipoIdentificacion";
+        String NUMERO_DOCUMENTO = "numeroDocumento";
+        String NOMBRES = "nombres";
+        String APELLIDOS = "apellidos";
+        String NOMBRE_COMPLETO = "nombreCompleto";
+        String EMAIL = "email";
+        String GENERO = "genero";
+        String DIRECCION = "direccion";
+        String TELEFONO = "telefono";
+        String CELULAR = "celular";
+        String FECHA_NACIMIENTO = "fechaNacimiento";
+        String NACIONALIDAD = "nacionalidad";
+        String ID_SECURITY = "idSecurity";
+        String FOTOGRAFIA_ID = "fotografiaId";
+        String UBICACION_EXPEDICION = "ubicacionExpedicion";
+        String UBICACION_EXPEDICION_ID = "ubicacionExpedicionId";
+        String FECHA_EXPEDICION = "fechaExpedicion";
+        String BARRIO_RESIDENCIA = "barrioResidencia";
+        String REGIMEN_SALUD = "regimenSalud";
     }
 
     @Id

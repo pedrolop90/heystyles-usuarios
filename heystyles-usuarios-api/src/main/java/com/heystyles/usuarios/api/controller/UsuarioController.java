@@ -8,7 +8,6 @@ import com.heystyles.usuarios.core.domain.Usuario;
 import com.heystyles.usuarios.core.domain.UsuarioExtended;
 import com.heystyles.usuarios.core.dto.UsuarioExtendedResponse;
 import com.heystyles.usuarios.core.dto.UsuarioListResponse;
-import com.heystyles.usuarios.core.dto.UsuarioRequest;
 import com.heystyles.usuarios.core.dto.UsuarioResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -58,7 +57,7 @@ public class UsuarioController {
     @PostMapping(value = "/extended", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<IdResponse> insertExtended(
-            @NotNull @Valid @RequestBody UsuarioRequest request) {
+            @NotNull @Valid @RequestBody UsuarioExtended request) {
         Long idUsuario = usuarioService.insert(request);
         return Responses.responseEntity(new IdResponse(idUsuario));
     }
@@ -81,7 +80,7 @@ public class UsuarioController {
             @ApiResponse(code = 404, message = "Usuario no encontrado.")
     })
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> updateExtended(@NotNull @Valid @RequestBody UsuarioRequest request) {
+    public ResponseEntity<BaseResponse> updateExtended(@NotNull @Valid @RequestBody UsuarioExtended request) {
         usuarioService.update(request);
         return Responses.successEntity("Actualizacion correcta");
     }
@@ -115,10 +114,10 @@ public class UsuarioController {
             @ApiResponse(code = 200, message = "Usuario Encontrado."),
             @ApiResponse(code = 404, message = "Usuario no encontrado.")
     })
-    @GetMapping(value = "/{usuarioId}/extended", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/numeroDocumento/{numeroDocumento}/extended", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UsuarioExtendedResponse> getUsuarioExtended(
-            @NotNull @PathVariable(name = "usuarioId") Long usuarioId) {
-        UsuarioExtended usuario = usuarioService.getUsuarioExtended(usuarioId);
+            @NotNull @PathVariable(name = "numeroDocumento") String numeroDocumento) {
+        UsuarioExtended usuario = usuarioService.getUsuarioExtended(numeroDocumento);
         return Responses.responseEntity(new UsuarioExtendedResponse(usuario));
     }
 
@@ -129,7 +128,7 @@ public class UsuarioController {
     })
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UsuarioListResponse> getUsuarios() {
-        List<Usuario> usuarios = usuarioService.findAll();
+        List<Usuario> usuarios = usuarioService.getUsuarios();
         return Responses.responseEntity(new UsuarioListResponse(usuarios));
     }
 

@@ -27,6 +27,7 @@ import java.time.LocalDateTime;
 public class CargoEntity extends AuditableWithAuthorEntity<Long> implements SoftDeletable {
 
     public interface Attributes extends AuditableWithAuthorEntity.Attributes {
+        String NIVEL = "nivel";
     }
 
     @Id

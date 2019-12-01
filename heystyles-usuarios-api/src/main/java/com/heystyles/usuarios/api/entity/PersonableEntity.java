@@ -30,6 +30,26 @@ import java.time.LocalDateTime;
 public abstract class PersonableEntity extends AuditableWithAuthorEntity<Long> implements Personable {
 
     public interface Attributes extends AuditableWithAuthorEntity.Attributes {
+        String PERSONA = "persona";
+        String PERSONA_ID = PERSONA + "." + PersonaEntity.Attributes.ID;
+        String TIPO_IDENTIFICACION = PERSONA + "." + PersonaEntity.Attributes.TIPO_IDENTIFICACION;
+        String NUMERO_DOCUMENTO = PERSONA + "." + PersonaEntity.Attributes.NUMERO_DOCUMENTO;
+        String NOMBRES = PERSONA + "." + PersonaEntity.Attributes.NOMBRES;
+        String APELLIDOS = PERSONA + "." + PersonaEntity.Attributes.APELLIDOS;
+        String NOMBRE_COMPLETO = PERSONA + "." + PersonaEntity.Attributes.NOMBRE_COMPLETO;
+        String EMAIL = PERSONA + "." + PersonaEntity.Attributes.EMAIL;
+        String GENERO = PERSONA + "." + PersonaEntity.Attributes.GENERO;
+        String DIRECCION = PERSONA + "." + PersonaEntity.Attributes.DIRECCION;
+        String TELEFONO = PERSONA + "." + PersonaEntity.Attributes.TELEFONO;
+        String CELULAR = PERSONA + "." + PersonaEntity.Attributes.CELULAR;
+        String FECHA_NACIMIENTO = PERSONA + "." + PersonaEntity.Attributes.FECHA_NACIMIENTO;
+        String NACIONALIDAD = PERSONA + "." + PersonaEntity.Attributes.NACIONALIDAD;
+        String ID_SECURITY = PERSONA + "." + PersonaEntity.Attributes.ID_SECURITY;
+        String FOTOGRAFIA = PERSONA + "." + PersonaEntity.Attributes.FOTOGRAFIA_ID;
+        String UBICACION_EXPEDICION = PERSONA + "." + PersonaEntity.Attributes.UBICACION_EXPEDICION;
+        String FECHA_EXPEDICION = PERSONA + "." + PersonaEntity.Attributes.FECHA_EXPEDICION;
+        String BARRIO_RESIDENCIA = PERSONA + "." + PersonaEntity.Attributes.BARRIO_RESIDENCIA;
+        String REGIMEN_SALUD = PERSONA + "." + PersonaEntity.Attributes.REGIMEN_SALUD;
     }
 
     @Id

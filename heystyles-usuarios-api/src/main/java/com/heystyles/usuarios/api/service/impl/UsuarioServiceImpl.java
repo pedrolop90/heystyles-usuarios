@@ -6,11 +6,11 @@ import com.heystyles.usuarios.api.dao.CargoDao;
 import com.heystyles.usuarios.api.dao.UsuarioDao;
 import com.heystyles.usuarios.api.entity.CargoEntity;
 import com.heystyles.usuarios.api.entity.UsuarioEntity;
+import com.heystyles.usuarios.api.http.util.HttpRequestContextHolder;
 import com.heystyles.usuarios.api.message.MessageKeys;
 import com.heystyles.usuarios.api.service.UsuarioService;
 import com.heystyles.usuarios.core.domain.Usuario;
 import com.heystyles.usuarios.core.domain.UsuarioExtended;
-import com.heystyles.usuarios.core.dto.UsuarioRequest;
 import domain.EstadoUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.context.i18n.LocaleContextHolder.getLocale;
@@ -46,7 +47,7 @@ public class UsuarioServiceImpl
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public Long insert(UsuarioRequest request) {
+    public Long insert(UsuarioExtended request) {
         Usuario usuario = request.getUsuario();
 
         Long id = insert(usuario);
@@ -63,7 +64,7 @@ public class UsuarioServiceImpl
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void update(UsuarioRequest request) {
+    public void update(UsuarioExtended request) {
         Usuario usuario = request.getUsuario();
 
         update(usuario);
@@ -140,12 +141,21 @@ public class UsuarioServiceImpl
     }
 
     @Override
-    public UsuarioExtended getUsuarioExtended(Long usuarioId) {
-        UsuarioEntity usuarioEntity = Optional.ofNullable(usuarioDao.findOne(usuarioId))
+    public UsuarioExtended getUsuarioExtended(String numeroDocumento) {
+        UsuarioEntity usuarioEntity = Optional.ofNullable(usuarioDao.findByPersonaNumeroDocumento(numeroDocumento))
                 .orElseThrow(() -> APIExceptions.objetoNoEncontrado(
                         messageSource.getMessage(
                                 MessageKeys.USUARIO_NOT_FOUND,
-                                new String[]{String.valueOf(usuarioId)}, getLocale())));
+                                new String[]{String.valueOf(numeroDocumento)}, getLocale())));
         return getConverterService().convertTo(usuarioEntity, UsuarioExtended.class);
     }
+
+    @Override
+    public List<Usuario> getUsuarios() {
+        String numeroDocumento = HttpRequestContextHolder.getUsuario();
+        List<UsuarioEntity> usuarioEntities = usuarioDao.findByExcluyendoCargoGerenteAndUsuarioActivo(numeroDocumento);
+        return getConverterService().convertTo(usuarioEntities, Usuario.class);
+    }
+
+
 }
