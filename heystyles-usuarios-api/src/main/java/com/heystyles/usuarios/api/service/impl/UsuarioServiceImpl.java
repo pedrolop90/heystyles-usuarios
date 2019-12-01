@@ -11,6 +11,7 @@ import com.heystyles.usuarios.api.message.MessageKeys;
 import com.heystyles.usuarios.api.service.UsuarioService;
 import com.heystyles.usuarios.core.domain.Usuario;
 import com.heystyles.usuarios.core.domain.UsuarioExtended;
+import com.heystyles.usuarios.core.dto.UsuarioCargoDto;
 import domain.EstadoUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -151,10 +152,10 @@ public class UsuarioServiceImpl
     }
 
     @Override
-    public List<Usuario> getUsuarios() {
+    public List<UsuarioCargoDto> getUsuarios() {
         String numeroDocumento = HttpRequestContextHolder.getUsuario();
         List<UsuarioEntity> usuarioEntities = usuarioDao.findByExcluyendoCargoGerenteAndUsuarioActivo(numeroDocumento);
-        return getConverterService().convertTo(usuarioEntities, Usuario.class);
+        return getConverterService().convertTo(usuarioEntities, UsuarioCargoDto.class);
     }
 
 

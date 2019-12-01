@@ -6,8 +6,9 @@ import com.heystyles.common.types.IdResponse;
 import com.heystyles.usuarios.api.service.UsuarioService;
 import com.heystyles.usuarios.core.domain.Usuario;
 import com.heystyles.usuarios.core.domain.UsuarioExtended;
+import com.heystyles.usuarios.core.dto.UsuarioCargoDto;
+import com.heystyles.usuarios.core.dto.UsuarioCargoDtoListResponse;
 import com.heystyles.usuarios.core.dto.UsuarioExtendedResponse;
-import com.heystyles.usuarios.core.dto.UsuarioListResponse;
 import com.heystyles.usuarios.core.dto.UsuarioResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -127,9 +128,9 @@ public class UsuarioController {
             @ApiResponse(code = 404, message = "Usuarios no encontrados.")
     })
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UsuarioListResponse> getUsuarios() {
-        List<Usuario> usuarios = usuarioService.getUsuarios();
-        return Responses.responseEntity(new UsuarioListResponse(usuarios));
+    public ResponseEntity<UsuarioCargoDtoListResponse> getUsuarios() {
+        List<UsuarioCargoDto> usuarios = usuarioService.getUsuarios();
+        return Responses.responseEntity(new UsuarioCargoDtoListResponse(usuarios));
     }
 
     @ApiOperation(value = "Permite Buscar un Usuario por numero de documento en la base de datos")
