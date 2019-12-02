@@ -10,6 +10,10 @@ public interface ProveedorService extends Service<Proveedor, Long> {
 
     void update(ProveedorExtended request);
 
-    ProveedorExtended getProveedor(Long proveedorId);
+    Proveedor getProveedor(Long proveedorId);
+
+    ProveedorExtended getProveedorExtended(Long proveedorId);
+
+    void activarProveedor(Long proveedorId);
 
 }

@@ -2,6 +2,7 @@ package com.heystyles.usuarios.core.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.heystyles.common.types.DomainBean;
+import com.heystyles.common.types.Estado;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Proveedor extends DomainBean<Long> {
@@ -19,6 +20,8 @@ public class Proveedor extends DomainBean<Long> {
     private String email;
 
     private Long fechaLimitePago;
+
+    private Estado estado;
 
     @Override
     public Long getId() {
@@ -76,5 +79,13 @@ public class Proveedor extends DomainBean<Long> {
 
     public void setFechaLimitePago(Long fechaLimitePago) {
         this.fechaLimitePago = fechaLimitePago;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 }

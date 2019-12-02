@@ -21,6 +21,7 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +39,7 @@ import java.util.List;
 @RestController
 @Api(value = "Proveedor Controller",
         description = "Controller para el manejo de proveedores.")
+@Validated
 public class ProveedorController {
 
     @Autowired
@@ -92,7 +94,7 @@ public class ProveedorController {
     @GetMapping(value = "/{proveedorId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProveedorExtendedResponse> getProveedor(
             @NotNull @PathVariable(name = "proveedorId") Long proveedorId) {
-        ProveedorExtended proveedorExtended = proveedorService.getProveedor(proveedorId);
+        ProveedorExtended proveedorExtended = proveedorService.getProveedorExtended(proveedorId);
         return Responses.responseEntity(new ProveedorExtendedResponse(proveedorExtended));
     }
 
@@ -130,5 +132,16 @@ public class ProveedorController {
             @NotNull @PathVariable(name = "proveedorId") Long proveedorId) {
         List<Persona> contactos = proveedorPersonaService.findContactosByProveedor(proveedorId);
         return Responses.responseEntity(new PersonaListResponse(contactos));
+    }
+
+    @ApiOperation(value = "Permite activar un Proveedor en la base de datos")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Proveedor Activado"),
+            @ApiResponse(code = 404, message = "Proveedor no encontrado.")
+    })
+    @PutMapping(value = "{proveedorId}/activar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BaseResponse> update(@NotNull @PathVariable Long proveedorId) {
+        proveedorService.activarProveedor(proveedorId);
+        return Responses.successEntity("Activacion correcta");
     }
 }

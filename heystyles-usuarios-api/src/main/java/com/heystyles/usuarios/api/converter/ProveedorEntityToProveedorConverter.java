@@ -17,6 +17,7 @@ public class ProveedorEntityToProveedorConverter implements Converter<ProveedorE
         bean.setDireccion(entity.getDireccion());
         bean.setEmail(entity.getEmail());
         bean.setFechaLimitePago(entity.getFechaLimitePago());
+        bean.setEstado(entity.getEstado());
         return bean;
     }
 }

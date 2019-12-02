@@ -2,6 +2,7 @@ package com.heystyles.usuarios.api.service.impl;
 
 import com.heystyles.common.exception.APIExceptions;
 import com.heystyles.common.service.impl.ServiceImpl;
+import com.heystyles.common.types.Estado;
 import com.heystyles.usuarios.api.dao.ProveedorDao;
 import com.heystyles.usuarios.api.entity.ProveedorEntity;
 import com.heystyles.usuarios.api.message.MessageKeys;
@@ -22,7 +23,8 @@ import java.util.Optional;
 import static org.springframework.context.i18n.LocaleContextHolder.getLocale;
 
 @Service
-public class ProveedorServiceImpl extends ServiceImpl<Proveedor, ProveedorEntity, Long> implements ProveedorService {
+public class ProveedorServiceImpl
+        extends ServiceImpl<Proveedor, ProveedorEntity, Long> implements ProveedorService {
 
     @Autowired
     private ProveedorDao proveedorDao;
@@ -58,13 +60,34 @@ public class ProveedorServiceImpl extends ServiceImpl<Proveedor, ProveedorEntity
         proveedorPersonaService.upsert(request.getProveedor().getId(), request.getContactos());
     }
 
+    @Override
+    public void delete(Long proveedorId) {
+        Proveedor proveedor = getProveedor(proveedorId);
+        proveedor.setEstado(Estado.INACTIVO);
+        super.update(proveedor);
+    }
 
     @Override
-    public ProveedorExtended getProveedor(Long proveedorId) {
+    public Proveedor getProveedor(Long proveedorId) {
+        return Optional.ofNullable(findById(proveedorId))
+                .orElseThrow(() -> APIExceptions.objetoNoEncontrado(
+                        messageSource.getMessage(MessageKeys.PROVEEDOR_NOT_FOUND,
+                                new String[]{String.valueOf(proveedorId)}, getLocale())));
+    }
+
+    @Override
+    public ProveedorExtended getProveedorExtended(Long proveedorId) {
         ProveedorEntity proveedorEntity = Optional.ofNullable(proveedorDao.findOne(proveedorId))
                 .orElseThrow(() -> APIExceptions.objetoNoEncontrado(
                         messageSource.getMessage(MessageKeys.PROVEEDOR_NOT_FOUND,
-                                                 new String[]{String.valueOf(proveedorId)}, getLocale())));
+                                new String[]{String.valueOf(proveedorId)}, getLocale())));
         return getConverterService().convertTo(proveedorEntity, ProveedorExtended.class);
+    }
+
+    @Override
+    public void activarProveedor(Long proveedorId) {
+        Proveedor proveedor = getProveedor(proveedorId);
+        proveedor.setEstado(Estado.ACTIVO);
+        super.update(proveedor);
     }
 }

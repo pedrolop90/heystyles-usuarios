@@ -2,6 +2,7 @@ package com.heystyles.usuarios.api.entity;
 
 import com.heystyles.common.persistence.LocalDateTimeAttributeConverter;
 import com.heystyles.common.types.AuditableWithAuthorEntity;
+import com.heystyles.common.types.Estado;
 import com.heystyles.common.types.SoftDeletable;
 import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedBy;
@@ -14,6 +15,8 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -57,6 +60,10 @@ public class ProveedorEntity extends AuditableWithAuthorEntity<Long> implements 
 
     @Column(name = "fecha_limite_pago")
     private Long fechaLimitePago;
+
+    @Column(name = "estado")
+    @Enumerated(value = EnumType.STRING)
+    private Estado estado;
 
     @CreatedDate
     @Column(name = "created_date")
@@ -209,5 +216,13 @@ public class ProveedorEntity extends AuditableWithAuthorEntity<Long> implements 
 
     public void setCuentasBanco(List<CuentaBancoEntity> cuentasBanco) {
         this.cuentasBanco = cuentasBanco;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 }
