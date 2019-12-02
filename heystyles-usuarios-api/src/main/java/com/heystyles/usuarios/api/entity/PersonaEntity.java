@@ -104,7 +104,7 @@ public class PersonaEntity extends AuditableWithAuthorEntity<Long> implements Pe
     @Column(name = "telefono")
     private String telefono;
 
-    @Column(name = "fotografia_id", nullable = false)
+    @Column(name = "fotografia_id")
     private Long fotografiaId;
 
     public PersonaEntity() {
