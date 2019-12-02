@@ -33,6 +33,8 @@ import java.util.List;
 public class ProveedorEntity extends AuditableWithAuthorEntity<Long> implements SoftDeletable {
 
     public interface Attributes extends AuditableWithAuthorEntity.Attributes {
+        String ESTADO = "estado";
+        String NOMBRE = "nombre";
     }
 
     @Id

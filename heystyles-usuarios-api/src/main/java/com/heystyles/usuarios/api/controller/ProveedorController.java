@@ -8,12 +8,12 @@ import com.heystyles.usuarios.api.service.ProveedorPersonaService;
 import com.heystyles.usuarios.api.service.ProveedorService;
 import com.heystyles.usuarios.core.domain.CuentaBanco;
 import com.heystyles.usuarios.core.domain.Persona;
-import com.heystyles.usuarios.core.domain.Proveedor;
 import com.heystyles.usuarios.core.dto.CuentaBancoListResponse;
 import com.heystyles.usuarios.core.dto.PersonaListResponse;
 import com.heystyles.usuarios.core.dto.ProveedorExtendedResponse;
 import com.heystyles.usuarios.core.dto.ProveedorListResponse;
 import com.heystyles.usuarios.core.domain.ProveedorExtended;
+import com.heystyles.usuarios.core.filter.ProveedorFilter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -98,15 +98,14 @@ public class ProveedorController {
         return Responses.responseEntity(new ProveedorExtendedResponse(proveedorExtended));
     }
 
-    @ApiOperation(value = "Permite Listar todos los Proveedores de la base de datos")
+    @ApiOperation(value = "Permite Listar todos los Proveedores de la base de datos, dado un filtro.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Proveedores Encontrados."),
             @ApiResponse(code = 404, message = "Proveedor no encontradas.")
     })
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProveedorListResponse> getProveedores() {
-        List<Proveedor> proveedores = proveedorService.findAll();
-        return Responses.responseEntity(new ProveedorListResponse(proveedores));
+    public ResponseEntity<ProveedorListResponse> getProveedores(ProveedorFilter filter) {
+        return Responses.responseEntity(proveedorService.filter(filter));
     }
 
 

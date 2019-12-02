@@ -3,6 +3,7 @@ package com.heystyles.usuarios.api.service.impl;
 import com.heystyles.common.exception.APIExceptions;
 import com.heystyles.common.service.impl.ServiceImpl;
 import com.heystyles.common.types.Estado;
+import com.heystyles.common.types.Page;
 import com.heystyles.usuarios.api.dao.ProveedorDao;
 import com.heystyles.usuarios.api.entity.ProveedorEntity;
 import com.heystyles.usuarios.api.message.MessageKeys;
@@ -11,6 +12,8 @@ import com.heystyles.usuarios.api.service.ProveedorPersonaService;
 import com.heystyles.usuarios.api.service.ProveedorService;
 import com.heystyles.usuarios.core.domain.Proveedor;
 import com.heystyles.usuarios.core.domain.ProveedorExtended;
+import com.heystyles.usuarios.core.dto.ProveedorListResponse;
+import com.heystyles.usuarios.core.filter.ProveedorFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.data.repository.CrudRepository;
@@ -89,5 +92,15 @@ public class ProveedorServiceImpl
         Proveedor proveedor = getProveedor(proveedorId);
         proveedor.setEstado(Estado.ACTIVO);
         super.update(proveedor);
+    }
+
+    @Override
+    public ProveedorListResponse filter(ProveedorFilter filter) {
+        filter = Optional.ofNullable(filter).orElse(new ProveedorFilter());
+        Page<ProveedorEntity> page = proveedorDao.getPage(filter);
+        return new ProveedorListResponse(
+                page.getTotalElements(),
+                getConverterService().convertTo(page.getContent(), Proveedor.class)
+        );
     }
 }
