@@ -1,6 +1,7 @@
 package com.heystyles.usuarios.core.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.heystyles.common.types.Estado;
 
 import javax.validation.constraints.NotNull;
 
@@ -11,6 +12,8 @@ public class Usuario extends Persona {
 
     @NotNull
     private Long cargoId;
+
+    private Estado estado;
 
     @Override
     public Long getId() {
@@ -28,5 +31,13 @@ public class Usuario extends Persona {
 
     public void setCargoId(Long cargoId) {
         this.cargoId = cargoId;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 }

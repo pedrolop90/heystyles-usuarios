@@ -13,6 +13,7 @@ public class UsuarioEntityToUsuarioConverterConverter extends PersonableEntityTo
         Usuario bean = new Usuario();
         bean.setId(entity.getId());
         bean.setCargoId(entity.getCargo().getId());
+        bean.setEstado(entity.getEstado());
         convertPersona(entity, bean);
         return bean;
     }

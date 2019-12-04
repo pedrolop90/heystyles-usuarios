@@ -1,10 +1,13 @@
 package com.heystyles.usuarios.api.entity;
 
+import com.heystyles.common.types.Estado;
 import com.heystyles.common.types.SoftDeletable;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,6 +28,10 @@ public class UsuarioEntity extends PersonableEntity implements SoftDeletable {
     @JoinColumn(name = "id_cargo", nullable = false)
     private CargoEntity cargo;
 
+    @Column(name = "estado")
+    @Enumerated(value = EnumType.STRING)
+    private Estado estado;
+
     @Column(name = "s_delete", nullable = false)
     private boolean delete;
 
@@ -34,6 +41,22 @@ public class UsuarioEntity extends PersonableEntity implements SoftDeletable {
 
     public void setCargo(CargoEntity cargo) {
         this.cargo = cargo;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+
+    public boolean isDelete() {
+        return delete;
+    }
+
+    public void setDelete(boolean delete) {
+        this.delete = delete;
     }
 
     @Override

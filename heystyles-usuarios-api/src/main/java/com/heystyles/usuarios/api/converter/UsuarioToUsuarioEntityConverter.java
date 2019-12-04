@@ -57,6 +57,8 @@ public class UsuarioToUsuarioEntityConverter implements Converter<Usuario, Usuar
                 .orElseThrow(() -> APIExceptions.objetoNoEncontrado(messageSource.getMessage(
                         MessageKeys.CARGO_NOT_FOUND, new String[]{String.valueOf(bean.getCargoId())}, getLocale())));
         entity.setCargo(cargoEntity);
+        entity.setEstado(bean.getEstado());
+
         entity.setIdPersona(bean.getIdPersona());
         entity.setNombres(bean.getNombres());
         entity.setApellidos(bean.getApellidos());
