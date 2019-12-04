@@ -54,6 +54,14 @@ public class PersonaServiceImpl
     }
 
     @Override
+    public void saveFotografia(String numeroDocumento, File fotografia) {
+        Persona persona = getPersonaByNumeroDocumento(numeroDocumento);
+        Long fotografiaId = fileClient.save(fotografia);
+        persona.setFotografiaId(fotografiaId);
+        update(persona);
+    }
+
+    @Override
     public File getFotografia(String numeroDocumento) {
         PersonaEntity personaEntity = personaDao.findByNumeroDocumento(numeroDocumento);
         if (personaEntity != null) {

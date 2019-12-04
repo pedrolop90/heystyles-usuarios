@@ -108,6 +108,18 @@ public class PersonaController {
         return Responses.responseEntity(new PersonaListResponse(personas));
     }
 
+    @ApiOperation(value = "Permite Actualizar la Fotografia de una persona, dado su numero de documento de la base de datos")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Fotografia Registrar."),
+            @ApiResponse(code = 404, message = "Fotografia no encontrada.")
+    })
+    @PutMapping(value = "/{numeroDocumento}/fotografia", produces = MediaType.APPLICATION_JSON_VALUE)
+    public BaseResponse registrarFotografia(@NotNull @PathVariable String numeroDocumento,
+                                            @NotNull @RequestBody File fotografia) {
+        personaService.saveFotografia(numeroDocumento, fotografia);
+        return Responses.success("registro exitoso");
+    }
+
     @ApiOperation(value = "Permite Obtener la Fotografia de una persona, dado su numero de documento de la base de datos")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Fotografia Encontrada."),

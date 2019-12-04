@@ -9,5 +9,7 @@ public interface PersonaService extends PersonableService<Persona, Long> {
 
     Persona getPersonaByNumeroDocumento(String numeroDocumento);
 
+    void saveFotografia(String numeroDocumento, File fotografia);
+
     File getFotografia(String numeroDocumento);
 }
