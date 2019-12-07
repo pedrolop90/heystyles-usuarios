@@ -12,7 +12,9 @@ public interface CargoService extends Service<Cargo, Long> {
 
     void update(CargoExtended request);
 
-    CargoExtended getCargo(Long cargoId);
+    CargoExtended getCargoExtended(Long cargoId);
+
+    Cargo getCargo(Long cargoId);
 
     List<Cargo> getCargos();
 }

@@ -24,7 +24,8 @@ public class CargoClienteImpl implements CargoClient {
     @Override
     public Cargo getCargo(Long cargoId) {
         UriComponentsBuilder urlBuilder = getUriProveedor()
-                .pathSegment(String.valueOf(cargoId));
+                .pathSegment(String.valueOf(cargoId))
+                .pathSegment("basico");
         return client.getForEntity(urlBuilder.toUriString(), CargoResponse.class).getBody().getData();
     }
 

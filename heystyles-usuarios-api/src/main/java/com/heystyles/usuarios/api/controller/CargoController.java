@@ -8,6 +8,7 @@ import com.heystyles.usuarios.core.domain.Cargo;
 import com.heystyles.usuarios.core.dto.CargoExtendedResponse;
 import com.heystyles.usuarios.core.dto.CargoListResponse;
 import com.heystyles.usuarios.core.dto.CargoExtended;
+import com.heystyles.usuarios.core.dto.CargoResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -78,9 +79,9 @@ public class CargoController {
             @ApiResponse(code = 404, message = "Cargo no encontrado.")
     })
     @GetMapping(value = "/{cargoId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CargoExtendedResponse> getCargo(
+    public ResponseEntity<CargoExtendedResponse> getCargoExtended(
             @NotNull @PathVariable(name = "cargoId") Long cargoId) {
-        return Responses.responseEntity(new CargoExtendedResponse(cargoService.getCargo(cargoId)));
+        return Responses.responseEntity(new CargoExtendedResponse(cargoService.getCargoExtended(cargoId)));
     }
 
     @ApiOperation(value = "Permite Listar todos los Cargos de la base de datos")
@@ -92,6 +93,17 @@ public class CargoController {
     public ResponseEntity<CargoListResponse> getCargos() {
         List<Cargo> cargos = cargoService.getCargos();
         return Responses.responseEntity(new CargoListResponse(cargos));
+    }
+
+    @ApiOperation(value = "Permite Buscar un Cargo de la base de datos")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Cargo Encontrado."),
+            @ApiResponse(code = 404, message = "Cargo no encontrado.")
+    })
+    @GetMapping(value = "/{cargoId}/basico", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<CargoResponse> getCargoBasico(
+            @NotNull @PathVariable(name = "cargoId") Long cargoId) {
+        return Responses.responseEntity(new CargoResponse(cargoService.getCargo(cargoId)));
     }
 
 }

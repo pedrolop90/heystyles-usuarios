@@ -74,11 +74,19 @@ public class CargoServiceImpl
     }
 
     @Override
-    public CargoExtended getCargo(Long cargoId) {
+    public CargoExtended getCargoExtended(Long cargoId) {
         CargoEntity cargoEntity = Optional.ofNullable(cargoDao.findOne(cargoId))
                 .orElseThrow(() -> APIExceptions.objetoNoEncontrado(messageSource.getMessage(
                         MessageKeys.CARGO_NOT_FOUND, new String[]{String.valueOf(cargoId)}, getLocale())));
         return getConverterService().convertTo(cargoEntity, CargoExtended.class);
+    }
+
+    @Override
+    public Cargo getCargo(Long cargoId) {
+        CargoEntity cargoEntity = Optional.ofNullable(cargoDao.findOne(cargoId))
+                .orElseThrow(() -> APIExceptions.objetoNoEncontrado(messageSource.getMessage(
+                        MessageKeys.CARGO_NOT_FOUND, new String[]{String.valueOf(cargoId)}, getLocale())));
+        return getConverterService().convertTo(cargoEntity, Cargo.class);
     }
 
     @Override
